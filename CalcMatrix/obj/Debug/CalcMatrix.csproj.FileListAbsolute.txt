@@ -19,3 +19,13 @@ C:\Users\Кирилл\Desktop\CalcMatrix\CalcMatrix\obj\Debug\CalcMatrix.Propert
 C:\Users\Кирилл\Desktop\CalcMatrix\CalcMatrix\obj\Debug\CalcMatrix.csproj.GenerateResource.cache
 C:\Users\Кирилл\Desktop\CalcMatrix\CalcMatrix\obj\Debug\CalcMatrix.exe
 C:\Users\Кирилл\Desktop\CalcMatrix\CalcMatrix\obj\Debug\CalcMatrix.pdb
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\bin\Debug\CalcMatrix.exe.config
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\bin\Debug\CalcMatrix.exe
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\bin\Debug\CalcMatrix.pdb
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.csprojAssemblyReference.cache
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.mainForm.resources
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.FullViewForm.resources
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.Properties.Resources.resources
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.csproj.GenerateResource.cache
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.exe
+C:\Users\Кирилл\Desktop\CalcMatrix_git\CalcMatrix\obj\Debug\CalcMatrix.pdb

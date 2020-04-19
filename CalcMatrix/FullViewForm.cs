@@ -8,14 +8,6 @@ namespace CalcMatrix
 {
     public partial class FullViewForm : Form
     {
-        Graphics g;
-        Pen myPen;
-        SolidBrush br;          
-        /*myPen = new Pen(Color.DeepSkyBlue, 1);
-            br = new SolidBrush(Color.DeepSkyBlue);
-            g = Graphics.FromHwnd(pictureBox1.Handle);
-            g.DrawEllipse(myPen, 0, 0, 16, 16);
-            g.FillEllipse(br, new Rectangle(0, 0, 16, 16));*/
         string current_opened_file = "1_1"; // имя текущего файла из которого берется матрица на экране
         string current_opened_matrix; //TODO
         string last_arrow; // последняя нажатая стрелка
@@ -111,7 +103,7 @@ namespace CalcMatrix
 
         private void data_grid_draw(string matrix_name,string file_name) // функция отрисовки дата грида на форме
         {
-            string file_path = "C:\\Users\\Кирилл\\Desktop\\CalcMatrix\\CalcMatrix\\matrix_"
+            string file_path = "C:\\Users\\Кирилл\\Desktop\\CalcMatrix_git\\CalcMatrix\\matrix_"
                 + matrix_name + "\\" + file_name + ".txt";
             try
             {
