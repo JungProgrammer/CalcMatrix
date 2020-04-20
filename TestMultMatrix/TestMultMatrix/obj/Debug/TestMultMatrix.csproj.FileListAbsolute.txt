@@ -1,0 +1,7 @@
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\bin\Debug\TestMultMatrix.exe.config
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\bin\Debug\TestMultMatrix.exe
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\bin\Debug\TestMultMatrix.pdb
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\obj\Debug\TestMultMatrix.csprojAssemblyReference.cache
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\obj\Debug\TestMultMatrix.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\obj\Debug\TestMultMatrix.exe
+C:\Users\User\Desktop\TestMultMatrix\TestMultMatrix\obj\Debug\TestMultMatrix.pdb
