@@ -21,8 +21,7 @@ namespace CalcMatrix
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            FullViewForm ff = new FullViewForm();
-            ff.Show();
+
         }
 
         private void InputFromFileForMatrix1_Click(object sender, EventArgs e)
@@ -39,6 +38,24 @@ namespace CalcMatrix
                     $"Details:\n\n{ex.StackTrace}");
                 }
             }
+        }
+
+        private void buttonFullViewMatrix1_Click(object sender, EventArgs e)
+        {
+            FullViewForm full_view = new FullViewForm("A");
+            full_view.Show();
+        }
+
+        private void buttonFullViewMatrix2_Click(object sender, EventArgs e)
+        {
+            FullViewForm full_view = new FullViewForm("B");
+            full_view.Show();
+        }
+
+        private void buttonFullViewMatrix3_Click(object sender, EventArgs e)
+        {
+            FullViewForm full_view = new FullViewForm("B");
+            full_view.Show();
         }
     }
 }

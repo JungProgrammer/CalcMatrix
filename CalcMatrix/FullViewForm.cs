@@ -12,8 +12,9 @@ namespace CalcMatrix
         string current_opened_matrix; //TODO
         string last_arrow; // последняя нажатая стрелка
 
-        public FullViewForm()
+        public FullViewForm(string matr)
         {
+            current_opened_matrix = matr;
             InitializeComponent();
         }
 
@@ -150,9 +151,12 @@ namespace CalcMatrix
             catch (FileNotFoundException)
             {
                 if (current_opened_file == "1_1")
-                    MessageBox.Show("Нарушена целостность файлов матрицы","Ошибка!");
+                {
+                    MessageBox.Show("Нарушена целостность файлов матрицы", "Ошибка!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    this.Close();
+                }
                 else
-                    MessageBox.Show("Достигнут край матрицы");
+                    MessageBox.Show("Достигнут край матрицы","Предупреждение",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 if (last_arrow == "right") //откат текущего имени файла при неудачной смене фокуса
                     second_number_minus();
                 else if (last_arrow == "left")
@@ -167,7 +171,7 @@ namespace CalcMatrix
             }
         private void FullViewForm_Load(object sender, EventArgs e)
         {
-            data_grid_draw("A", "1_1");
+            data_grid_draw(current_opened_matrix, "1_1");
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
