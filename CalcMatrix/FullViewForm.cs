@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CalcMatrix
@@ -11,14 +8,17 @@ namespace CalcMatrix
         string current_opened_file = "1_1"; // имя текущего файла из которого берется матрица на экране
         string current_opened_matrix; //TODO
         string last_arrow; // последняя нажатая стрелка
-
+        int current_row = 0; // начало текущего диапазона индексов строк
+        int current_column = 0; // начало текущего диапазона индексов столбцов
+        const int TABLE_DIM = 50; //Разрмерность матрицы data grid 
         public FullViewForm(string matr)
         {
             current_opened_matrix = matr;
             InitializeComponent();
+
         }
 
-        private string get_first_number() // возвращает первое число в имени текущего файла
+        /*private string get_first_number() // возвращает первое число в имени текущего файла
         {
             string first_number = "";
             for (int i = 0; i < current_opened_file.Length; i++)
@@ -76,35 +76,76 @@ namespace CalcMatrix
             second_number = first_number + '_' + second_number;
             current_opened_file = second_number;
             return second_number;
-        }
+        }*/
 
         private void RightArrow_Click(object sender, EventArgs e)//4 функции клика по стрелкам
         {
-            last_arrow = "right";
-            data_grid_draw(current_opened_matrix = "A", second_number_plus());
+            /*last_arrow = "right";
+            data_grid_draw(current_opened_matrix = "A", second_number_plus());*/
         } 
 
         private void LeftArrow_Click(object sender, EventArgs e)
         {
-            last_arrow = "left";
-            data_grid_draw(current_opened_matrix = "A", second_number_minus());
+            /*last_arrow = "left";
+            data_grid_draw(current_opened_matrix = "A", second_number_minus());*/
         }
 
         private void DownArrow_Click(object sender, EventArgs e)
         {
-            last_arrow = "down";
-            data_grid_draw(current_opened_matrix = "A",first_number_plus());
+            /*last_arrow = "down";
+            data_grid_draw(current_opened_matrix = "A",first_number_plus());*/
         }
 
         private void UpArrow_Click(object sender, EventArgs e)
         {
-            last_arrow = "up";
-            data_grid_draw(current_opened_matrix = "A", first_number_minus());
+            /*last_arrow = "up";
+            data_grid_draw(current_opened_matrix = "A", first_number_minus());*/
         }
 
-        private void data_grid_draw(string matrix_name,string file_name) // функция отрисовки дата грида на форме
+        private void data_grid_draw(string matrix_name) // функция отрисовки дата грида на форме
         {
-            string file_path = "C:\\Users\\Кирилл\\Desktop\\CalcMatrix_git\\CalcMatrix\\matrix_"
+            //dataGridView1.Visible = false;
+            //dataGridView1.Rows.Clear();
+            string[] row = new string[TABLE_DIM];
+            for (int j = 0; j < TABLE_DIM; j++)
+            {
+                row[j] = "0";
+                dataGridView1.Columns.Add(Convert.ToString(current_column + j + 1), Convert.ToString(current_column + j + 1));
+            }
+            for (int i = 0; i < TABLE_DIM; i++)
+            {
+                dataGridView1.Rows.Add(row);
+                dataGridView1.Rows[i].HeaderCell.Value = (current_row + i + 1).ToString(); //индекс строки
+
+            }
+
+            for (int i = current_row; i < current_row + TABLE_DIM && i<mainForm.A_N; i++)
+            {
+                for(int j = current_column;j<current_column + TABLE_DIM && j<mainForm.A_N; j++)
+                {
+                    if(mainForm.search(mainForm.head_A,i,j,mainForm.A_N) != null)
+                    {
+                        dataGridView1.Rows[i].Cells[j].Value = mainForm.search(mainForm.head_A, i, j, mainForm.A_N).a;
+                    }
+
+                    /*mainForm.List temp = head;
+                    while (temp != null)
+                    {
+                        ulong j_temp = Convert.ToUInt64(Math.Ceiling(temp.L / 6.0));
+                        ulong i_temp = temp.L - (j_temp - 1) * 6;
+                        if (Convert.ToUInt64(i) == i_temp && Convert.ToUInt64(j) == j_temp)
+                        {
+                            dataGridView1.Rows[i].Cells[j].Value = temp.a;
+                            break;
+                        }
+                        temp = temp.next;
+                    }*/
+
+
+                }
+            }
+
+            /*string file_path = "C:\\Users\\Кирилл\\Desktop\\CalcMatrix_git\\CalcMatrix\\matrix_"
                 + matrix_name + "\\" + file_name + ".txt";
             try
             {
@@ -167,11 +208,13 @@ namespace CalcMatrix
                     first_number_minus();
             }
             dataGridView1.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
-            dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            }
+            dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);*/
+
+        }
         private void FullViewForm_Load(object sender, EventArgs e)
         {
-            data_grid_draw(current_opened_matrix, "1_1");
+
+            data_grid_draw(current_opened_matrix);
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
