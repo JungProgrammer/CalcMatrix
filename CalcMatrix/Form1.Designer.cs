@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.Matrix1ViewOnMainForm = new System.Windows.Forms.DataGridView();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.inputValueForFirstMatrix1OnMainForm = new System.Windows.Forms.TextBox();
             this.inputRowForFirstMatrix1OnMainForm = new System.Windows.Forms.TextBox();
@@ -66,13 +63,7 @@
             this.SaveMatrix2ToFile = new System.Windows.Forms.Button();
             this.SaveResultMatrixToFile = new System.Windows.Forms.Button();
             this.Matrix2ViewOnMainForm = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultMatrixViewOnMainForm = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -84,44 +75,24 @@
             // 
             // Matrix1ViewOnMainForm
             // 
+            this.Matrix1ViewOnMainForm.AllowUserToAddRows = false;
             this.Matrix1ViewOnMainForm.AllowUserToDeleteRows = false;
             this.Matrix1ViewOnMainForm.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Matrix1ViewOnMainForm.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.Matrix1ViewOnMainForm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Matrix1ViewOnMainForm.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Value,
-            this.Row,
-            this.Column});
             this.Matrix1ViewOnMainForm.Location = new System.Drawing.Point(40, 197);
-            this.Matrix1ViewOnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Matrix1ViewOnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.Matrix1ViewOnMainForm.Name = "Matrix1ViewOnMainForm";
+            this.Matrix1ViewOnMainForm.ReadOnly = true;
             this.Matrix1ViewOnMainForm.RowHeadersWidth = 51;
             this.Matrix1ViewOnMainForm.Size = new System.Drawing.Size(372, 410);
             this.Matrix1ViewOnMainForm.TabIndex = 0;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Значение";
-            this.Value.MinimumWidth = 6;
-            this.Value.Name = "Value";
-            // 
-            // Row
-            // 
-            this.Row.HeaderText = "Строка";
-            this.Row.MinimumWidth = 6;
-            this.Row.Name = "Row";
-            // 
-            // Column
-            // 
-            this.Column.HeaderText = "Столбец";
-            this.Column.MinimumWidth = 6;
-            this.Column.Name = "Column";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.Location = new System.Drawing.Point(420, 158);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(67, 32);
             this.button1.TabIndex = 2;
@@ -132,7 +103,7 @@
             // 
             this.inputValueForFirstMatrix1OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputValueForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(40, 158);
-            this.inputValueForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputValueForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputValueForFirstMatrix1OnMainForm.Name = "inputValueForFirstMatrix1OnMainForm";
             this.inputValueForFirstMatrix1OnMainForm.Size = new System.Drawing.Size(117, 30);
             this.inputValueForFirstMatrix1OnMainForm.TabIndex = 3;
@@ -141,7 +112,7 @@
             // 
             this.inputRowForFirstMatrix1OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputRowForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(167, 158);
-            this.inputRowForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputRowForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputRowForFirstMatrix1OnMainForm.Name = "inputRowForFirstMatrix1OnMainForm";
             this.inputRowForFirstMatrix1OnMainForm.Size = new System.Drawing.Size(117, 30);
             this.inputRowForFirstMatrix1OnMainForm.TabIndex = 4;
@@ -150,7 +121,7 @@
             // 
             this.inputColumnForFirstMatrix1OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputColumnForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(293, 158);
-            this.inputColumnForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputColumnForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputColumnForFirstMatrix1OnMainForm.Name = "inputColumnForFirstMatrix1OnMainForm";
             this.inputColumnForFirstMatrix1OnMainForm.Size = new System.Drawing.Size(117, 30);
             this.inputColumnForFirstMatrix1OnMainForm.TabIndex = 5;
@@ -225,7 +196,7 @@
             // 
             this.inputColumnForFirstMatrix2OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputColumnForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(1201, 158);
-            this.inputColumnForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputColumnForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputColumnForFirstMatrix2OnMainForm.Name = "inputColumnForFirstMatrix2OnMainForm";
             this.inputColumnForFirstMatrix2OnMainForm.Size = new System.Drawing.Size(117, 30);
             this.inputColumnForFirstMatrix2OnMainForm.TabIndex = 12;
@@ -234,7 +205,7 @@
             // 
             this.inputRowForFirstMatrix2OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputRowForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(1075, 158);
-            this.inputRowForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputRowForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputRowForFirstMatrix2OnMainForm.Name = "inputRowForFirstMatrix2OnMainForm";
             this.inputRowForFirstMatrix2OnMainForm.Size = new System.Drawing.Size(117, 30);
             this.inputRowForFirstMatrix2OnMainForm.TabIndex = 11;
@@ -243,7 +214,7 @@
             // 
             this.inputValueForFirstMatrix2OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputValueForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(948, 158);
-            this.inputValueForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputValueForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputValueForFirstMatrix2OnMainForm.Name = "inputValueForFirstMatrix2OnMainForm";
             this.inputValueForFirstMatrix2OnMainForm.Size = new System.Drawing.Size(117, 30);
             this.inputValueForFirstMatrix2OnMainForm.TabIndex = 10;
@@ -252,7 +223,7 @@
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button2.Location = new System.Drawing.Point(1328, 158);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(65, 32);
             this.button2.TabIndex = 9;
@@ -274,7 +245,7 @@
             // 
             this.setNForMatrix1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.setNForMatrix1.Location = new System.Drawing.Point(216, 86);
-            this.setNForMatrix1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.setNForMatrix1.Margin = new System.Windows.Forms.Padding(4);
             this.setNForMatrix1.Name = "setNForMatrix1";
             this.setNForMatrix1.Size = new System.Drawing.Size(117, 30);
             this.setNForMatrix1.TabIndex = 16;
@@ -294,7 +265,7 @@
             // 
             this.setNForMatrix2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.setNForMatrix2.Location = new System.Drawing.Point(1111, 90);
-            this.setNForMatrix2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.setNForMatrix2.Margin = new System.Windows.Forms.Padding(4);
             this.setNForMatrix2.Name = "setNForMatrix2";
             this.setNForMatrix2.Size = new System.Drawing.Size(117, 30);
             this.setNForMatrix2.TabIndex = 19;
@@ -303,7 +274,7 @@
             // 
             this.inputRandomNumsForMatrix1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputRandomNumsForMatrix1.Location = new System.Drawing.Point(40, 716);
-            this.inputRandomNumsForMatrix1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputRandomNumsForMatrix1.Margin = new System.Windows.Forms.Padding(4);
             this.inputRandomNumsForMatrix1.Name = "inputRandomNumsForMatrix1";
             this.inputRandomNumsForMatrix1.Size = new System.Drawing.Size(371, 37);
             this.inputRandomNumsForMatrix1.TabIndex = 20;
@@ -314,7 +285,7 @@
             // 
             this.inputFromFileForMatrix1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputFromFileForMatrix1.Location = new System.Drawing.Point(40, 672);
-            this.inputFromFileForMatrix1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputFromFileForMatrix1.Margin = new System.Windows.Forms.Padding(4);
             this.inputFromFileForMatrix1.Name = "inputFromFileForMatrix1";
             this.inputFromFileForMatrix1.Size = new System.Drawing.Size(371, 37);
             this.inputFromFileForMatrix1.TabIndex = 21;
@@ -326,7 +297,7 @@
             // 
             this.inputRandomNumsForMatrix2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputRandomNumsForMatrix2.Location = new System.Drawing.Point(948, 716);
-            this.inputRandomNumsForMatrix2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputRandomNumsForMatrix2.Margin = new System.Windows.Forms.Padding(4);
             this.inputRandomNumsForMatrix2.Name = "inputRandomNumsForMatrix2";
             this.inputRandomNumsForMatrix2.Size = new System.Drawing.Size(371, 37);
             this.inputRandomNumsForMatrix2.TabIndex = 22;
@@ -337,18 +308,19 @@
             // 
             this.inputFromFileForMatrix2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.inputFromFileForMatrix2.Location = new System.Drawing.Point(949, 672);
-            this.inputFromFileForMatrix2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.inputFromFileForMatrix2.Margin = new System.Windows.Forms.Padding(4);
             this.inputFromFileForMatrix2.Name = "inputFromFileForMatrix2";
             this.inputFromFileForMatrix2.Size = new System.Drawing.Size(371, 37);
             this.inputFromFileForMatrix2.TabIndex = 23;
             this.inputFromFileForMatrix2.Text = "Ввод из файла";
             this.inputFromFileForMatrix2.UseVisualStyleBackColor = true;
+            this.inputFromFileForMatrix2.Click += new System.EventHandler(this.inputFromFileForMatrix2_Click);
             // 
             // buttonFullViewMatrix1
             // 
             this.buttonFullViewMatrix1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonFullViewMatrix1.Location = new System.Drawing.Point(40, 614);
-            this.buttonFullViewMatrix1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonFullViewMatrix1.Margin = new System.Windows.Forms.Padding(4);
             this.buttonFullViewMatrix1.Name = "buttonFullViewMatrix1";
             this.buttonFullViewMatrix1.Size = new System.Drawing.Size(372, 37);
             this.buttonFullViewMatrix1.TabIndex = 24;
@@ -360,7 +332,7 @@
             // 
             this.buttonFullViewMatrix2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonFullViewMatrix2.Location = new System.Drawing.Point(948, 614);
-            this.buttonFullViewMatrix2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonFullViewMatrix2.Margin = new System.Windows.Forms.Padding(4);
             this.buttonFullViewMatrix2.Name = "buttonFullViewMatrix2";
             this.buttonFullViewMatrix2.Size = new System.Drawing.Size(372, 37);
             this.buttonFullViewMatrix2.TabIndex = 25;
@@ -372,7 +344,7 @@
             // 
             this.SumBut.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SumBut.Location = new System.Drawing.Point(540, 197);
-            this.SumBut.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SumBut.Margin = new System.Windows.Forms.Padding(4);
             this.SumBut.Name = "SumBut";
             this.SumBut.Size = new System.Drawing.Size(256, 52);
             this.SumBut.TabIndex = 27;
@@ -383,7 +355,7 @@
             // 
             this.Dev.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Dev.Location = new System.Drawing.Point(540, 256);
-            this.Dev.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Dev.Margin = new System.Windows.Forms.Padding(4);
             this.Dev.Name = "Dev";
             this.Dev.Size = new System.Drawing.Size(256, 52);
             this.Dev.TabIndex = 28;
@@ -394,7 +366,7 @@
             // 
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button5.Location = new System.Drawing.Point(540, 315);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(256, 52);
             this.button5.TabIndex = 29;
@@ -405,7 +377,7 @@
             // 
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button6.Location = new System.Drawing.Point(540, 388);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(256, 106);
             this.button6.TabIndex = 30;
@@ -416,7 +388,7 @@
             // 
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button7.Location = new System.Drawing.Point(540, 501);
-            this.button7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button7.Margin = new System.Windows.Forms.Padding(4);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(256, 106);
             this.button7.TabIndex = 31;
@@ -427,7 +399,7 @@
             // 
             this.buttonFullViewMatrix3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonFullViewMatrix3.Location = new System.Drawing.Point(1600, 614);
-            this.buttonFullViewMatrix3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonFullViewMatrix3.Margin = new System.Windows.Forms.Padding(4);
             this.buttonFullViewMatrix3.Name = "buttonFullViewMatrix3";
             this.buttonFullViewMatrix3.Size = new System.Drawing.Size(372, 37);
             this.buttonFullViewMatrix3.TabIndex = 32;
@@ -439,104 +411,66 @@
             // 
             this.SaveMatrix1ToFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SaveMatrix1ToFile.Location = new System.Drawing.Point(41, 761);
-            this.SaveMatrix1ToFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SaveMatrix1ToFile.Margin = new System.Windows.Forms.Padding(4);
             this.SaveMatrix1ToFile.Name = "SaveMatrix1ToFile";
             this.SaveMatrix1ToFile.Size = new System.Drawing.Size(371, 37);
             this.SaveMatrix1ToFile.TabIndex = 33;
             this.SaveMatrix1ToFile.Text = "Сохранить в файл";
             this.SaveMatrix1ToFile.UseVisualStyleBackColor = true;
+            this.SaveMatrix1ToFile.Click += new System.EventHandler(this.SaveMatrix1ToFile_Click);
             // 
             // SaveMatrix2ToFile
             // 
             this.SaveMatrix2ToFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SaveMatrix2ToFile.Location = new System.Drawing.Point(948, 761);
-            this.SaveMatrix2ToFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SaveMatrix2ToFile.Margin = new System.Windows.Forms.Padding(4);
             this.SaveMatrix2ToFile.Name = "SaveMatrix2ToFile";
             this.SaveMatrix2ToFile.Size = new System.Drawing.Size(371, 37);
             this.SaveMatrix2ToFile.TabIndex = 34;
             this.SaveMatrix2ToFile.Text = "Сохранить в файл";
             this.SaveMatrix2ToFile.UseVisualStyleBackColor = true;
+            this.SaveMatrix2ToFile.Click += new System.EventHandler(this.SaveMatrix2ToFile_Click);
             // 
             // SaveResultMatrixToFile
             // 
             this.SaveResultMatrixToFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SaveResultMatrixToFile.Location = new System.Drawing.Point(1600, 658);
-            this.SaveResultMatrixToFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SaveResultMatrixToFile.Margin = new System.Windows.Forms.Padding(4);
             this.SaveResultMatrixToFile.Name = "SaveResultMatrixToFile";
             this.SaveResultMatrixToFile.Size = new System.Drawing.Size(371, 37);
             this.SaveResultMatrixToFile.TabIndex = 35;
             this.SaveResultMatrixToFile.Text = "Сохранить в файл";
             this.SaveResultMatrixToFile.UseVisualStyleBackColor = true;
+            this.SaveResultMatrixToFile.Click += new System.EventHandler(this.SaveResultMatrixToFile_Click);
             // 
             // Matrix2ViewOnMainForm
             // 
+            this.Matrix2ViewOnMainForm.AllowUserToAddRows = false;
             this.Matrix2ViewOnMainForm.AllowUserToDeleteRows = false;
             this.Matrix2ViewOnMainForm.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Matrix2ViewOnMainForm.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.Matrix2ViewOnMainForm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Matrix2ViewOnMainForm.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
             this.Matrix2ViewOnMainForm.Location = new System.Drawing.Point(949, 197);
-            this.Matrix2ViewOnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Matrix2ViewOnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.Matrix2ViewOnMainForm.Name = "Matrix2ViewOnMainForm";
+            this.Matrix2ViewOnMainForm.ReadOnly = true;
             this.Matrix2ViewOnMainForm.RowHeadersWidth = 51;
             this.Matrix2ViewOnMainForm.Size = new System.Drawing.Size(372, 410);
             this.Matrix2ViewOnMainForm.TabIndex = 36;
             // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Значение";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Строка";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Столбец";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
             // ResultMatrixViewOnMainForm
             // 
+            this.ResultMatrixViewOnMainForm.AllowUserToAddRows = false;
             this.ResultMatrixViewOnMainForm.AllowUserToDeleteRows = false;
             this.ResultMatrixViewOnMainForm.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ResultMatrixViewOnMainForm.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.ResultMatrixViewOnMainForm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ResultMatrixViewOnMainForm.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6});
             this.ResultMatrixViewOnMainForm.Location = new System.Drawing.Point(1599, 197);
-            this.ResultMatrixViewOnMainForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ResultMatrixViewOnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.ResultMatrixViewOnMainForm.Name = "ResultMatrixViewOnMainForm";
             this.ResultMatrixViewOnMainForm.RowHeadersWidth = 51;
             this.ResultMatrixViewOnMainForm.Size = new System.Drawing.Size(372, 410);
             this.ResultMatrixViewOnMainForm.TabIndex = 37;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Значение";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Строка";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Столбец";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
             // label9
             // 
@@ -619,7 +553,7 @@
             this.Controls.Add(this.inputValueForFirstMatrix1OnMainForm);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Matrix1ViewOnMainForm);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "mainForm";
             this.Text = "CalcMatrix";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -667,17 +601,8 @@
         private System.Windows.Forms.Button SaveMatrix1ToFile;
         private System.Windows.Forms.Button SaveMatrix2ToFile;
         private System.Windows.Forms.Button SaveResultMatrixToFile;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Row;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column;
         private System.Windows.Forms.DataGridView Matrix2ViewOnMainForm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridView ResultMatrixViewOnMainForm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
