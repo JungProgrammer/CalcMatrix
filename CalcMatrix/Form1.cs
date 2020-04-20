@@ -9,6 +9,14 @@ namespace CalcMatrix
 
     public partial class mainForm : Form
     {
+        internal static List head_A;
+        internal static List head_B;
+        internal static List head_C;
+        internal static int A_N;
+        internal static int B_N;
+        internal static int C_N; // TODO ДОБАВИТЬ ВЫСЧИТЫВАНИЕ РАЗМЕРНОСТИ К ОПЕРАЦИЯМ ИНАЧЕ ПИЗДА МОТОРУ
+
+
         internal class List
         {
             public ulong L;//индексы
@@ -16,12 +24,6 @@ namespace CalcMatrix
             public List next = null;
         }
 
-        internal static List head_A;
-        internal static List head_B;
-        internal static List head_C;
-        internal static int A_N;
-        internal static int B_N;
-        internal static int C_N;
         internal static List create_list(int i, int j, double a, int N)
         {
             if (a == 0) return null;
@@ -69,8 +71,6 @@ namespace CalcMatrix
             return temp;
         }
 
-
-
         internal static void delete(ref List arr, int i, int j, int N)
         {
             ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
@@ -116,14 +116,14 @@ namespace CalcMatrix
                         Matrix1ViewOnMainForm.DataSource = null;
                         Matrix1ViewOnMainForm.Rows.Clear();
                         Matrix1ViewOnMainForm.DataSource = matrix;
-                        matrix.Columns.Add("Значение");
                         matrix.Columns.Add("Строка");
                         matrix.Columns.Add("Столбец");
+                        matrix.Columns.Add("Значение");
                         A_N = Convert.ToInt32(sw.ReadLine()); // определение размерности
                         while ((line = sw.ReadLine()) != null)
                         {
                             string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
-                            enter(ref head_A, A_N, Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2]), Convert.ToInt32(row_string[0])); //добавление в список
+                            enter(ref head_A, A_N, Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2])); //добавление в список
                             matrix.Rows.Add(row_string); // добавляем строку в дата грид
                             Matrix1ViewOnMainForm.Update();
                         }
@@ -140,19 +140,19 @@ namespace CalcMatrix
 
         private void buttonFullViewMatrix1_Click(object sender, EventArgs e)
         {
-            FullViewForm full_view = new FullViewForm("A");
+            FullViewForm full_view = new FullViewForm("A"); // просмотр матрицы А в полной форме
             full_view.Show();
         }
 
         private void buttonFullViewMatrix2_Click(object sender, EventArgs e)
         {
-            FullViewForm full_view = new FullViewForm("B");
+            FullViewForm full_view = new FullViewForm("B"); // просмотр матрицы B в полной форме
             full_view.Show();
         }
 
         private void buttonFullViewMatrix3_Click(object sender, EventArgs e)
         {
-            FullViewForm full_view = new FullViewForm("B");
+            FullViewForm full_view = new FullViewForm("C"); // просмотр матрицы C в полной форме
             full_view.Show();
         }
 
@@ -169,15 +169,15 @@ namespace CalcMatrix
                         Matrix2ViewOnMainForm.DataSource = null;
                         Matrix2ViewOnMainForm.Rows.Clear();
                         Matrix2ViewOnMainForm.DataSource = matrix;
-                        matrix.Columns.Add("Значение");
                         matrix.Columns.Add("Строка");
                         matrix.Columns.Add("Столбец");
+                        matrix.Columns.Add("Значение");
                         B_N = Convert.ToInt32(sw.ReadLine()); // определение размерности
                         while ((line = sw.ReadLine()) != null)
                         {
                             string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
                             matrix.Rows.Add(row_string); // добавляем строку в дата грид
-                            enter(ref head_A, B_N, Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2]), Convert.ToInt32(row_string[0])); //добавление в список
+                            enter(ref head_B, B_N, Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2])); //добавление в список
                             Matrix2ViewOnMainForm.Update();
                         }
                     }
@@ -196,10 +196,12 @@ namespace CalcMatrix
         private void SaveMatrix1ToFile_Click(object sender, EventArgs e) //сохранение матрицы А в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            if(saveFileDialog.ShowDialog() == DialogResult.OK)
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
+                    sw.WriteLine(B_N);
                     foreach(DataGridViewRow row in Matrix1ViewOnMainForm.Rows)
                     {
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
@@ -211,10 +213,12 @@ namespace CalcMatrix
         private void SaveMatrix2ToFile_Click(object sender, EventArgs e) //сохранение матрицы В в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
+                    sw.WriteLine(B_N);
                     foreach (DataGridViewRow row in Matrix2ViewOnMainForm.Rows)
                     {
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
@@ -226,10 +230,12 @@ namespace CalcMatrix
         private void SaveResultMatrixToFile_Click(object sender, EventArgs e) //сохранение матрицы С в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
+                    sw.WriteLine(C_N);
                     foreach (DataGridViewRow row in ResultMatrixViewOnMainForm.Rows)
                     {
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
