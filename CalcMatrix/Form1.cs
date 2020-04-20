@@ -106,7 +106,6 @@ namespace CalcMatrix
         private void InputFromFileForMatrix1_Click(object sender, EventArgs e) // ввод матрицы А из файла
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
                 try
                 {
                     using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
@@ -128,14 +127,12 @@ namespace CalcMatrix
                             Matrix1ViewOnMainForm.Update();
                         }
                     }
-
                 }
                 catch (SecurityException ex)
                 {
                     MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                     $"Details:\n\n{ex.StackTrace}");
                 }
-            }
         }
 
         private void buttonFullViewMatrix1_Click(object sender, EventArgs e)
@@ -159,7 +156,6 @@ namespace CalcMatrix
         private void inputFromFileForMatrix2_Click(object sender, EventArgs e) // ввод матрицы B из файла
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
                 try
                 {
                     using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
@@ -188,60 +184,45 @@ namespace CalcMatrix
                     MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                     $"Details:\n\n{ex.StackTrace}");
                 }
-            }
         }
-
-
 
         private void SaveMatrix1ToFile_Click(object sender, EventArgs e) //сохранение матрицы А в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; // маска для подсказывания пользователю, какое расширение нужно выбрать при сохранении файла
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
                     sw.WriteLine(B_N);
                     foreach(DataGridViewRow row in Matrix1ViewOnMainForm.Rows)
-                    {
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
-                    }
                 }
-            }
         }
 
         private void SaveMatrix2ToFile_Click(object sender, EventArgs e) //сохранение матрицы В в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; // маска для подсказывания пользователю, какое расширение нужно выбрать при сохранении файла
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
                     sw.WriteLine(B_N);
                     foreach (DataGridViewRow row in Matrix2ViewOnMainForm.Rows)
-                    {
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
-                    }
                 }
-            }
         }
 
         private void SaveResultMatrixToFile_Click(object sender, EventArgs e) //сохранение матрицы С в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; // маска для подсказывания пользователю, какое расширение нужно выбрать при сохранении файла
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
                     sw.WriteLine(C_N);
                     foreach (DataGridViewRow row in ResultMatrixViewOnMainForm.Rows)
-                    {
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
-                    }
                 }
-            }
         }
     }
 }

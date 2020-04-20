@@ -15,7 +15,6 @@ namespace CalcMatrix
         {
             InitializeComponent();
             current_opened_matrix = matr;
-
         }
 
         private void RightArrow_Click(object sender, EventArgs e)//4 функции клика по стрелкам
@@ -90,6 +89,7 @@ namespace CalcMatrix
                 row[j] = "0";
                 dataGridView1.Columns.Add(Convert.ToString(current_column + j), Convert.ToString(current_column + j + 1));
             }
+
             for (int i = 0; i < TABLE_DIM; i++) 
             {
                 dataGridView1.Rows.Add(row); // заполнение строки нулями
@@ -97,14 +97,13 @@ namespace CalcMatrix
             }
                 for (int i = current_row; i < current_row + TABLE_DIM && i < current_N; i++) 
                     for (int j = current_column; j < current_column + TABLE_DIM && j < current_N; j++)
-                        if (mainForm.search(current_head, i, j, current_N) != null) //пробегаем по всей матрице и ищем значения которе попадают в часть матрицы, которя на экране
-                            dataGridView1.Rows[i%TABLE_DIM].Cells[j%TABLE_DIM].Value = mainForm.search(current_head, i, j, current_N).a;
+                        if (mainForm.search(current_head, i, j, current_N) != null) //пробегаем по всему списку и ищем значения, которе попадают в часть матрицы, которя на экране
+                            dataGridView1.Rows[i%TABLE_DIM].Cells[j%TABLE_DIM].Value = mainForm.search(current_head, i, j, current_N).a; //если такое значение найдено, то заменяем 0 на это значение в data grid
                 dataGridView1.Visible = true;
         }
         private void FullViewForm_Load(object sender, EventArgs e)
         {
             data_grid_draw();
         }
-
     }
 }
