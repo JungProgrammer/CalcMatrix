@@ -9,12 +9,13 @@ internal class Matrix
 {
     public int N;
     public List elem;
+
     /// <summary>
     /// Получает номер столбца элемента
     /// </summary>
     /// <param name="elem"></param>
     /// <returns></returns>
-    int GetColumn(List elem)
+    public int GetColumn(List elem)
     {
         return ((int)elem.L) / N;
     }
@@ -24,7 +25,7 @@ internal class Matrix
     /// </summary>
     /// <param name="elem"></param>
     /// <returns></returns>
-    int GetRow(List elem)
+    public int GetRow(List elem)
     {
         return (int)(elem.L - (ulong)GetColumn(elem) * (ulong)N);
     }
@@ -75,6 +76,8 @@ internal class Matrix
 
     /// <summary>
     /// Производит поиск элемента по заданным индексам
+    /// null - если элемент не найдем
+    /// если найдем то List этот элемент
     /// </summary>
     /// <param name="arr"></param>
     /// <param name="i"></param>
@@ -162,6 +165,14 @@ internal class Matrix
             }
         }
     }
+
+    /// <summary>
+    /// создание списка
+    /// </summary>
+    /// <param name="i"></param>
+    /// <param name="j"></param>
+    /// <param name="a"></param>
+    /// <returns></returns>
     public List create_list(int i, int j, double a)
     {
         if (a == 0) return null;
@@ -173,6 +184,12 @@ internal class Matrix
         return elem;
     }
 
+    /// <summary>
+    /// вставка элемента в список
+    /// </summary>
+    /// <param name="i"></param>
+    /// <param name="j"></param>
+    /// <param name="a"></param>
     public void enter(int i, int j, double a)
     {
         if (elem != null) Insert(i, j, a);

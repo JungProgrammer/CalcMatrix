@@ -80,7 +80,7 @@ namespace CalcMatrix
                 for (int i = current_row; i < current_row + TABLE_DIM && i < current_opened_matrix.N; i++) 
                     for (int j = current_column; j < current_column + TABLE_DIM && j < current_opened_matrix.N; j++)
                         if (current_opened_matrix.Search(i,j) != null ) //пробегаем по всему списку и ищем значения, которе попадают в часть матрицы, которя на экране
-                            dataGridView1.Rows[i%TABLE_DIM].Cells[j%TABLE_DIM].Value = current_opened_matrix.Search(i,j).value/*mainForm.search(current_opened_matrix.elem, i, j, current_opened_matrix.N).value*/; //если такое значение найдено, то заменяем 0 на это значение в data grid
+                            dataGridView1.Rows[i%TABLE_DIM].Cells[j%TABLE_DIM].Value = current_opened_matrix.Search(i,j).value; //если такое значение найдено, то заменяем 0 на это значение в data grid
                 dataGridView1.Visible = true;
         }
         private void FullViewForm_Load(object sender, EventArgs e)

@@ -25,7 +25,7 @@ namespace CalcMatrix
 
         }
 
-        void InitFormsForInputsMatrix()
+        void InitFormsForInputsMatrix() // инициализация матриц
         {
             A = new Matrix();
             matrix1 = new DataTable();
@@ -55,20 +55,20 @@ namespace CalcMatrix
             ResultMatrixViewOnMainForm.DataSource = matrix3;
         }
 
-        private void file_save(DataGridView grid, Matrix mt)
+        private void file_save(DataGridView grid, Matrix mt) // сохранение в файл
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"; // маска для подсказывания пользователю, какое расширение нужно выбрать при сохранении файла
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
-                    sw.WriteLine(mt.N);
-                    foreach (DataGridViewRow row in grid.Rows)
+                    sw.WriteLine(mt.N); //вывод размерности
+                    foreach (DataGridViewRow row in grid.Rows) //вывод элементов
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
                 }
         }
 
-        private void file_input(ref DataGridView grid, ref Matrix mt)
+        private void file_input(ref DataGridView grid, ref Matrix mt) // ввод из файла
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 try
@@ -97,10 +97,29 @@ namespace CalcMatrix
                 }
         }
 
+        private void show_result() // отображение результата операции
+        {
+            ResultMatrixViewOnMainForm.DataSource = null;
+            ResultMatrixViewOnMainForm.Rows.Clear();
+            ResultMatrixViewOnMainForm.DataSource = matrix3;
+            List temp = C.elem;
+            while ((temp != null))
+            {
+                string[] row_string = new string[3];
+                row_string[0] = C.GetRow(temp).ToString();
+                row_string[1] = C.GetColumn(temp).ToString();
+                row_string[2] = temp.value.ToString();
+                matrix3.Rows.Add(row_string); // добавляем строку в дата грид
+                ResultMatrixViewOnMainForm.Update();
+                temp = temp.next;
+            }
+        }
+
         private void random_fill(ref DataGridView grid, ref Matrix mt, ref DataTable dt, ref TextBox setNforMatrix)
         {
+
             int elem_numbers;//количество случайных чисел
-            int i_rand, j_rand;
+            int i_rand, j_rand; // случайные индексы
             Random r = new Random();
             grid.DataSource = null;
             grid.Rows.Clear();
@@ -108,28 +127,32 @@ namespace CalcMatrix
             grid.DataSource = dt;
             mt = new Matrix();
             mt.N = Convert.ToInt32(setNforMatrix.Text);
-            elem_numbers = r.Next(mt.N - mt.N / 10, mt.N + mt.N / 10); //Генерация количества случайных чисел в пределах N+-10% От N
-            for (int i = 0; i < elem_numbers; i++)
+            if (mt.N >= 1 && mt.N <= 100000) // проверка правильности размерности 
             {
-                double elem = r.Next(-100001, 100000);
-                int elem_float = r.Next(0, 99);
-                elem = elem + elem_float / 100.0;
-                do
+                elem_numbers = r.Next(mt.N - mt.N / 10, mt.N + mt.N / 10); //Генерация количества случайных чисел в пределах N+-10% От N
+                for (int i = 0; i < elem_numbers; i++)
                 {
-                    i_rand = r.Next(0, mt.N);
-                    j_rand = r.Next(0, mt.N);
-                    if (mt.Search(i_rand, j_rand) == null)
+                    double elem = r.Next(-100001, 100000); // генерация целой части
+                    int elem_float = r.Next(0, 99); // генерация дробной части
+                    elem += elem_float / 100.0; // объединение целой и дробной
+                    do
                     {
-                        mt.enter(i_rand, j_rand, elem);
-                        string[] row_string = new string[3];
-                        row_string[0] = i_rand.ToString();
-                        row_string[1] = j_rand.ToString();
-                        row_string[2] = elem.ToString();
-                        dt.Rows.Add(row_string); // добавляем строку в дата грид
-                        grid.Update();
-                    }
-                } while (mt.Search(i_rand, j_rand) == null);
-            }
+                        i_rand = r.Next(0, mt.N); // генерация случайных индексов
+                        j_rand = r.Next(0, mt.N);
+                        if (mt.Search(i_rand, j_rand) == null) //если элемента с такими индексами нет, то вставляем
+                        {
+                            mt.enter(i_rand, j_rand, elem);
+                            string[] row_string = new string[3];
+                            row_string[0] = i_rand.ToString();
+                            row_string[1] = j_rand.ToString();
+                            row_string[2] = elem.ToString();
+                            dt.Rows.Add(row_string); // добавляем строку в дата грид
+                            grid.Update();
+                        }
+                    } while (mt.Search(i_rand, j_rand) == null); // генерируем рандомные индексы пока натыкаемся на существующие элементы
+                }
+            } else
+                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void InputFromFileForMatrix1_Click(object sender, EventArgs e) // ввод матрицы А из файла
@@ -184,18 +207,14 @@ namespace CalcMatrix
         {
             char number = e.KeyChar;
             if (!char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
-            {
                 e.Handled = true;
-            }
         }
 
         private void setNForMatrix2_KeyPress(object sender, KeyPressEventArgs e) // ограничение ввода размерности
         {
             char number = e.KeyChar;
             if (!char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
-            {
                 e.Handled = true;
-            }
         }
 
         private void inputRandomNumsForMatrix2_Click(object sender, EventArgs e)
@@ -214,7 +233,6 @@ namespace CalcMatrix
                 j = Convert.ToInt32(inputColumnForFirstMatrix1OnMainForm.Text);
 
                 A.enter(i, j, val);
-
                 // добавляем строку в дата грид
                 matrix1.Rows.Add(i, j, val);
                 Matrix1ViewOnMainForm.Update();
