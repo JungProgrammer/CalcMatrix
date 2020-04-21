@@ -5,13 +5,11 @@ namespace CalcMatrix
 {
     public partial class FullViewForm : Form
     {
-        string current_opened_matrix; //текущая открытая матрица
+        mainForm.Matrix current_opened_matrix; //текущая открытая матрица
         int current_row = 0; // начало текущего диапазона индексов строк
         int current_column = 0; // начало текущего диапазона индексов столбцов
         const int TABLE_DIM = 50; //Разрмерность матрицы data grid 
-        int current_N; //размерность текущей матрицы
-        mainForm.List current_head; // голова текущей матрицы
-        public FullViewForm(string matr)
+        internal FullViewForm(mainForm.Matrix matr)
         {
             InitializeComponent();
             current_opened_matrix = matr;
@@ -19,7 +17,7 @@ namespace CalcMatrix
 
         private void RightArrow_Click(object sender, EventArgs e)//4 функции клика по стрелкам
         {
-            if (current_column + TABLE_DIM < current_N)
+            if (current_column + TABLE_DIM < current_opened_matrix.N)
             {
                 current_column += 50;
                 data_grid_draw();
@@ -41,7 +39,7 @@ namespace CalcMatrix
 
         private void DownArrow_Click(object sender, EventArgs e)
         {
-            if (current_row + TABLE_DIM < current_N)
+            if (current_row + TABLE_DIM < current_opened_matrix.N)
             {
                 current_row += 50;
                 data_grid_draw();
@@ -67,22 +65,6 @@ namespace CalcMatrix
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
 
-            if (current_opened_matrix == "A") //определение какую матрицу показывать
-            {
-                current_N = mainForm.A_N;
-                current_head = mainForm.head_A;
-            }
-            else if (current_opened_matrix == "B")
-            {
-                current_N = mainForm.B_N;
-                current_head = mainForm.head_B;
-            }
-            else
-            {
-                current_N = mainForm.C_N;
-                current_head = mainForm.head_C;
-            }
-
             string[] row = new string[TABLE_DIM]; // добавление столбцов и подготовка массива нулей для заполнения строки
             for (int j = 0; j < TABLE_DIM ; j++)
             {
@@ -95,10 +77,10 @@ namespace CalcMatrix
                 dataGridView1.Rows.Add(row); // заполнение строки нулями
                 dataGridView1.Rows[i].HeaderCell.Value = (current_row + i).ToString(); //индекс строки
             }
-                for (int i = current_row; i < current_row + TABLE_DIM && i < current_N; i++) 
-                    for (int j = current_column; j < current_column + TABLE_DIM && j < current_N; j++)
-                        if (mainForm.search(current_head, i, j, current_N) != null) //пробегаем по всему списку и ищем значения, которе попадают в часть матрицы, которя на экране
-                            dataGridView1.Rows[i%TABLE_DIM].Cells[j%TABLE_DIM].Value = mainForm.search(current_head, i, j, current_N).a; //если такое значение найдено, то заменяем 0 на это значение в data grid
+                for (int i = current_row; i < current_row + TABLE_DIM && i < current_opened_matrix.N; i++) 
+                    for (int j = current_column; j < current_column + TABLE_DIM && j < current_opened_matrix.N; j++)
+                        if (current_opened_matrix.Search(i,j) != null ) //пробегаем по всему списку и ищем значения, которе попадают в часть матрицы, которя на экране
+                            dataGridView1.Rows[i%TABLE_DIM].Cells[j%TABLE_DIM].Value = current_opened_matrix.Search(i,j).value/*mainForm.search(current_opened_matrix.elem, i, j, current_opened_matrix.N).value*/; //если такое значение найдено, то заменяем 0 на это значение в data grid
                 dataGridView1.Visible = true;
         }
         private void FullViewForm_Load(object sender, EventArgs e)

@@ -9,90 +9,192 @@ namespace CalcMatrix
 
     public partial class mainForm : Form
     {
-        internal static List head_A;
-        internal static List head_B;
-        internal static List head_C;
-        internal static int A_N;
-        internal static int B_N;
-        internal static int C_N; // TODO ДОБАВИТЬ ВЫСЧИТЫВАНИЕ РАЗМЕРНОСТИ К ОПЕРАЦИЯМ ИНАЧЕ ПИЗДА МОТОРУ
-
-
+        Matrix A = new Matrix();
+        Matrix B = new Matrix();
+        Matrix C = new Matrix();
         internal class List
         {
             public ulong L;//индексы
-            public double a;//значение
+            public double value;//значение
             public List next = null;
         }
 
-        internal static List create_list(int i, int j, double a, int N)
+        internal class Matrix
         {
-            if (a == 0) return null;
-            ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
-            List arr = new List();
-            arr.next = null;
-            arr.a = a;
-            arr.L = L;
-            return arr;
-        }
-        internal static void insert(ref List arr, int i, int j, double a, int N)
-        {
-            if (a == 0) { delete(ref arr, i, j, N); return; }
-            ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
-            List temp1 = arr, temp2 = null;
-            while ((temp1 != null) && (L > temp1.L))
-            {
-                temp2 = temp1;
-                temp1 = temp2.next;
-            }
-            if ((temp1 != null) && (L == temp1.L))//изменяем старое значение если нашли
-            {
-                temp1.a = a;
-            }
-            else
-            {
-                List x = new List();//создаем элемент структуры под новый элемент
-                x.L = L;
-                x.a = a;
-                x.next = null;
+            public int N;
+            public List elem;
 
-                if (temp1 == null) temp2.next = x;//вставляем в конец
-                else//вставляем между элементами или в начало
+            /// <summary>
+            /// Получает номер столбца элемента
+            /// </summary>
+            /// <param name="elem"></param>
+            /// <returns></returns>
+            int GetColumn(List elem)
+            {
+                return ((int)elem.L) / N;
+            }
+
+            /// <summary>
+            /// Получает номер строки элемента
+            /// </summary>
+            /// <param name="elem"></param>
+            /// <returns></returns>
+            int GetRow(List elem)
+            {
+                return (int)(elem.L - (ulong)GetColumn(elem) * (ulong)N);
+            }
+
+            /// <summary>
+            /// Проверяет, есть ли ненулевые элементы в строке
+            /// True - элемент найден
+            /// False - элемент не найден
+            /// </summary>
+            /// <param name="row"></param>
+            /// <returns></returns>
+            public bool RowIsNotZero(int row)
+            {
+                bool isFind = false;
+
+                List head = elem;
+                while (head != null)
                 {
-                    if (temp2 == null) { x.next = temp1; arr = x; }
-                    else { x.next = temp1; temp2.next = x; }
+                    //строка найдена
+                    if (GetRow(head) == row) isFind = true;
+                    head = head.next;
+                }
+
+                return isFind;
+            }
+
+            /// <summary>
+            /// Проверяет, есть ли ненулевые элементы в столбце
+            /// True - элемент найден
+            /// False - элемент не найден
+            /// </summary>
+            /// <param name="row"></param>
+            /// <returns></returns>
+            public bool ColumnIsNotZero(int column)
+            {
+                bool isFind = false;
+
+                List head = elem;
+                while (head != null)
+                {
+                    //строка найдена
+                    if (GetColumn(head) == column) isFind = true;
+                    head = head.next;
+                }
+
+                return isFind;
+            }
+
+            /// <summary>
+            /// Производит поиск элемента по заданным индексам
+            /// </summary>
+            /// <param name="arr"></param>
+            /// <param name="i"></param>
+            /// <param name="j"></param>
+            /// <param name="N"></param>
+            /// <returns></returns>
+            public List Search(int i, int j)
+            {
+                ulong L = Convert.ToUInt64(i + j * N);
+                List temp = this.elem;
+                while ((temp != null) && (L != temp.L)) temp = temp.next;
+                return temp;
+            }
+
+            /// <summary>
+            /// Удаление элемента в матрице
+            /// </summary>
+            /// <param name="arr"></param>
+            /// <param name="i"></param>
+            /// <param name="j"></param>
+            /// <param name="N"></param>
+            public void Delete(int i, int j)
+            {
+                //конвертируем индексы
+                ulong L = Convert.ToUInt64(i + j * N);
+
+                List temp1 = elem, temp2 = null;
+                while ((temp1 != null) && (L != temp1.L))
+                {
+                    temp2 = temp1;
+                    temp1 = temp1.next;
+                }
+                if (temp1 != null)
+                {
+                    //если нашли-удаляем
+                    if (temp2 != null)
+                        temp2.next = temp1.next;
+                    else elem = elem.next;
                 }
             }
-        }
-        internal static List search(List arr, int i, int j, int N)
-        {
-            ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
-            List temp = arr;
-            while ((temp != null) && (L != temp.L)) temp = temp.next;
-            return temp;
-        }
 
-        internal static void delete(ref List arr, int i, int j, int N)
-        {
-            ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
-            List temp1 = arr, temp2 = null;
-            while ((temp1 != null) && (L != temp1.L))
+            /// <summary>
+            /// Вставка элемента в матрицу
+            /// </summary>
+            /// <param name="arr"></param>
+            /// <param name="i"></param>
+            /// <param name="j"></param>
+            /// <param name="_value"></param>
+            /// <param name="N"></param>
+            public void Insert(int i, int j, double _value)
             {
-                temp2 = temp1;
-                temp1 = temp1.next;
+                if (_value == 0)
+                {
+                    Delete(i, j); return;
+                }
+
+                //конвертируем индексы
+                ulong L = Convert.ToUInt64(i + j * N);
+
+                List temp1 = elem, temp2 = null;
+                while ((temp1 != null) && (L > temp1.L))
+                {
+                    temp2 = temp1;
+                    temp1 = temp2.next;
+                }
+                //изменяем старое значение если нашли
+                if ((temp1 != null) && (L == temp1.L))
+                {
+                    temp1.value = _value;
+                }
+                else
+                {
+                    //создаем элемент структуры под новый элемент
+                    List x = new List();
+                    x.L = L;
+                    x.value = _value;
+                    x.next = null;
+
+                    //вставляем в конец
+                    if (temp1 == null) temp2.next = x;
+                    else//вставляем между элементами или в начало
+                    {
+                        if (temp2 == null) { x.next = temp1; elem = x; }
+                        else { x.next = temp1; temp2.next = x; }
+                    }
+                }
             }
-            if (temp1 != null)
-            {//если нашли-удаляем
-                if (temp2 != null)
-                    temp2.next = temp1.next;
-                else arr = arr.next;
+            public List create_list(int i, int j, double a)
+            {
+                if (a == 0) return null;
+                ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
+                elem = new List();
+                elem.next = null;
+                elem.value = a;
+                elem.L = L;
+                return elem;
+            }
+
+            public void enter(int i, int j, double a)
+            {
+                if (elem != null) Insert(i, j, a);
+                else elem = create_list(i, j, a);
             }
         }
 
-        internal static void enter(ref List arr, int N, int i, int j, double a)
-        {
-            if (arr != null) insert(ref arr, i, j, a, N);
-            else arr = create_list(i, j, a, N);
-        }
         public mainForm()
         {
             InitializeComponent();
@@ -118,11 +220,11 @@ namespace CalcMatrix
                         matrix.Columns.Add("Строка");
                         matrix.Columns.Add("Столбец");
                         matrix.Columns.Add("Значение");
-                        A_N = Convert.ToInt32(sw.ReadLine()); // определение размерности
+                        A.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
                         while ((line = sw.ReadLine()) != null)
                         {
                             string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
-                            enter(ref head_A, A_N, Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2])); //добавление в список
+                            A.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2]));
                             matrix.Rows.Add(row_string); // добавляем строку в дата грид
                             Matrix1ViewOnMainForm.Update();
                         }
@@ -137,19 +239,19 @@ namespace CalcMatrix
 
         private void buttonFullViewMatrix1_Click(object sender, EventArgs e)
         {
-            FullViewForm full_view = new FullViewForm("A"); // просмотр матрицы А в полной форме
+            FullViewForm full_view = new FullViewForm(A); // просмотр матрицы А в полной форме
             full_view.Show();
         }
 
         private void buttonFullViewMatrix2_Click(object sender, EventArgs e)
         {
-            FullViewForm full_view = new FullViewForm("B"); // просмотр матрицы B в полной форме
+            FullViewForm full_view = new FullViewForm(B); // просмотр матрицы B в полной форме
             full_view.Show();
         }
 
         private void buttonFullViewMatrix3_Click(object sender, EventArgs e)
         {
-            FullViewForm full_view = new FullViewForm("C"); // просмотр матрицы C в полной форме
+            FullViewForm full_view = new FullViewForm(C); // просмотр матрицы C в полной форме
             full_view.Show();
         }
 
@@ -168,12 +270,12 @@ namespace CalcMatrix
                         matrix.Columns.Add("Строка");
                         matrix.Columns.Add("Столбец");
                         matrix.Columns.Add("Значение");
-                        B_N = Convert.ToInt32(sw.ReadLine()); // определение размерности
+                        B.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
                         while ((line = sw.ReadLine()) != null)
                         {
                             string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
                             matrix.Rows.Add(row_string); // добавляем строку в дата грид
-                            enter(ref head_B, B_N, Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2])); //добавление в список
+                            B.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2]));
                             Matrix2ViewOnMainForm.Update();
                         }
                     }
@@ -193,7 +295,7 @@ namespace CalcMatrix
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
-                    sw.WriteLine(B_N);
+                    sw.WriteLine(A.N);
                     foreach(DataGridViewRow row in Matrix1ViewOnMainForm.Rows)
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
                 }
@@ -206,7 +308,7 @@ namespace CalcMatrix
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
-                    sw.WriteLine(B_N);
+                    sw.WriteLine(B.N);
                     foreach (DataGridViewRow row in Matrix2ViewOnMainForm.Rows)
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
                 }
@@ -219,7 +321,7 @@ namespace CalcMatrix
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
-                    sw.WriteLine(C_N);
+                    sw.WriteLine(C.N);
                     foreach (DataGridViewRow row in ResultMatrixViewOnMainForm.Rows)
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
                 }
