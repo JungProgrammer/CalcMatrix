@@ -101,35 +101,78 @@ namespace ConsoleApp1
                 while ((temp != null) && (L != temp.L)) temp = temp.next;
                 return temp;
             }
-        }
 
+            /// <summary>
+            /// Удаление элемента в матрице
+            /// </summary>
+            /// <param name="arr"></param>
+            /// <param name="i"></param>
+            /// <param name="j"></param>
+            /// <param name="N"></param>
+            public void Delete(int i, int j)
+            {
+                //конвертируем индексы
+                ulong L = Convert.ToUInt64(i + j * N);
 
-        static void insert(ref List arr, int i, int j, double _value, int N)
-        {
-            if (_value == 0) { delete(ref arr, i, j, N); return; }
-            ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
-            List temp1 = arr, temp2 = null;
-            while ((temp1 != null) && (L > temp1.L))
-            {
-                temp2 = temp1;
-                temp1 = temp2.next;
-            }
-            if ((temp1 != null) && (L == temp1.L))//изменяем старое значение если нашли
-            {
-                temp1.value = _value;
-            }
-            else
-            {
-                List x = new List();//создаем элемент структуры под новый элемент
-                x.L = L;
-                x.value = _value;
-                x.next = null;
-
-                if (temp1 == null) temp2.next = x;//вставляем в конец
-                else//вставляем между элементами или в начало
+                List temp1 = elem, temp2 = null;
+                while ((temp1 != null) && (L != temp1.L))
                 {
-                    if (temp2 == null) { x.next = temp1; arr = x; }
-                    else { x.next = temp1; temp2.next = x; }
+                    temp2 = temp1;
+                    temp1 = temp1.next;
+                }
+                if (temp1 != null)
+                {
+                    //если нашли-удаляем
+                    if (temp2 != null)
+                        temp2.next = temp1.next;
+                    else elem = elem.next;
+                }
+            }
+
+            /// <summary>
+            /// Вставка элемента в матрицу
+            /// </summary>
+            /// <param name="arr"></param>
+            /// <param name="i"></param>
+            /// <param name="j"></param>
+            /// <param name="_value"></param>
+            /// <param name="N"></param>
+            public void Insert(int i, int j, double _value)
+            {
+                if (_value == 0)
+                {
+                    Delete(i, j); return;
+                }
+
+                //конвертируем индексы
+                ulong L = Convert.ToUInt64(i + j * N);
+
+                List temp1 = elem, temp2 = null;
+                while ((temp1 != null) && (L > temp1.L))
+                {
+                    temp2 = temp1;
+                    temp1 = temp2.next;
+                }
+                //изменяем старое значение если нашли
+                if ((temp1 != null) && (L == temp1.L))
+                {
+                    temp1.value = _value;
+                }
+                else
+                {
+                    //создаем элемент структуры под новый элемент
+                    List x = new List();
+                    x.L = L;
+                    x.value = _value;
+                    x.next = null;
+
+                    //вставляем в конец
+                    if (temp1 == null) temp2.next = x;
+                    else//вставляем между элементами или в начало
+                    {
+                        if (temp2 == null) { x.next = temp1; elem = x; }
+                        else { x.next = temp1; temp2.next = x; }
+                    }
                 }
             }
         }
@@ -140,8 +183,11 @@ namespace ConsoleApp1
             Matrix resMatrix = null;
             if (m1.N == m2.N)
             {
-                List resElements = null;
+                resMatrix = new Matrix();
+                resMatrix.N = m1.N;
+                resMatrix.elem = new List();
 
+                //переменная, куда будет считаться результат для двух векторов
                 double res;
                 int i, j, k;
                 for(i = 0; i < m1.N; i++)
@@ -166,16 +212,11 @@ namespace ConsoleApp1
                             //добавление результата
                             if(res != 0)
                             {
-                                insert(ref resElements, i, j, res, m1.N);
+                                resMatrix.Insert(i, j, res);
                             }
                         }
                     }
                 }
-
-                //создаем результирующую матрицу
-                resMatrix = new Matrix();
-                resMatrix.N = m1.N;
-                resMatrix.elem = resElements;
             }
             else
             {
