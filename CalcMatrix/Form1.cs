@@ -9,9 +9,10 @@ namespace CalcMatrix
 
     public partial class mainForm : Form
     {
-        Matrix A = new Matrix();
-        Matrix B = new Matrix();
-        Matrix C = new Matrix();
+        Matrix A;
+        Matrix B;
+        Matrix C;
+        DataTable matrix1, matrix2,matrix3;
         internal class List
         {
             public ulong L;//индексы
@@ -23,7 +24,6 @@ namespace CalcMatrix
         {
             public int N;
             public List elem;
-
             /// <summary>
             /// Получает номер столбца элемента
             /// </summary>
@@ -198,6 +198,7 @@ namespace CalcMatrix
         public mainForm()
         {
             InitializeComponent();
+            InitFormsForInputsMatrix();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -205,7 +206,7 @@ namespace CalcMatrix
 
         }
 
-        private void InputFromFileForMatrix1_Click(object sender, EventArgs e) // ввод матрицы А из файла
+        private void file_input(DataGridView grid, Matrix mt)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 try
@@ -213,20 +214,17 @@ namespace CalcMatrix
                     using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
                     {
                         string line;
-                        DataTable matrix = new DataTable("Матрица");
-                        Matrix1ViewOnMainForm.DataSource = null;
-                        Matrix1ViewOnMainForm.Rows.Clear();
-                        Matrix1ViewOnMainForm.DataSource = matrix;
-                        matrix.Columns.Add("Строка");
-                        matrix.Columns.Add("Столбец");
-                        matrix.Columns.Add("Значение");
-                        A.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
+                        grid.DataSource = null;
+                        grid.Rows.Clear();
+                        grid.DataSource = matrix1;
+                        mt = new Matrix();
+                        mt.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
                         while ((line = sw.ReadLine()) != null)
                         {
                             string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
-                            A.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2]));
-                            matrix.Rows.Add(row_string); // добавляем строку в дата грид
-                            Matrix1ViewOnMainForm.Update();
+                            mt.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToDouble(row_string[2]));
+                            matrix1.Rows.Add(row_string); // добавляем строку в дата грид
+                            grid.Update();
                         }
                     }
                 }
@@ -235,6 +233,11 @@ namespace CalcMatrix
                     MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                     $"Details:\n\n{ex.StackTrace}");
                 }
+        }
+
+        private void InputFromFileForMatrix1_Click(object sender, EventArgs e) // ввод матрицы А из файла
+        {
+            file_input(Matrix1ViewOnMainForm, A);
         }
 
         private void buttonFullViewMatrix1_Click(object sender, EventArgs e)
@@ -257,35 +260,7 @@ namespace CalcMatrix
 
         private void inputFromFileForMatrix2_Click(object sender, EventArgs e) // ввод матрицы B из файла
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                try
-                {
-                    using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
-                    {
-                        string line;
-                        DataTable matrix = new DataTable("Матрица");
-                        Matrix2ViewOnMainForm.DataSource = null;
-                        Matrix2ViewOnMainForm.Rows.Clear();
-                        Matrix2ViewOnMainForm.DataSource = matrix;
-                        matrix.Columns.Add("Строка");
-                        matrix.Columns.Add("Столбец");
-                        matrix.Columns.Add("Значение");
-                        B.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
-                        while ((line = sw.ReadLine()) != null)
-                        {
-                            string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
-                            matrix.Rows.Add(row_string); // добавляем строку в дата грид
-                            B.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToInt32(row_string[2]));
-                            Matrix2ViewOnMainForm.Update();
-                        }
-                    }
-
-                }
-                catch (SecurityException ex)
-                {
-                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                    $"Details:\n\n{ex.StackTrace}");
-                }
+            file_input(Matrix2ViewOnMainForm, B);
         }
 
         private void SaveMatrix1ToFile_Click(object sender, EventArgs e) //сохранение матрицы А в файл
@@ -326,5 +301,148 @@ namespace CalcMatrix
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
                 }
         }
+        /// <summary>
+        /// Функция случайного заполнения матрицы
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="mt"></param>
+        /// <param name="dt"></param>
+        /// <param name="setNforMatrix"></param>
+        private void random_fill(DataGridView grid,Matrix mt, DataTable dt, TextBox setNforMatrix)
+        {
+            int elem_numbers;//количество случайных чисел
+            int i_rand, j_rand;
+            Random r = new Random();
+            grid.DataSource = null;
+            grid.Rows.Clear();
+            grid.DataSource = dt;
+            mt = new Matrix();
+            mt.N = Convert.ToInt32(setNforMatrix.Text);
+            elem_numbers = r.Next(mt.N - mt.N * 10, mt.N + mt.N * 10); //Генерация количества случайных чисел в пределах N+-10% От N
+            for (int i = 0; i < elem_numbers; i++)
+            {
+                double elem = r.Next(-100001, 100000);
+                int elem_float = r.Next(0, 99);
+                elem = elem + elem_float / 100.0;
+                do
+                {
+                    i_rand = r.Next(0, mt.N);
+                    j_rand = r.Next(0, mt.N);
+                    if (mt.Search(i_rand, j_rand) == null)
+                    {
+                        mt.enter(i_rand, j_rand, elem);
+                        string[] row_string = new string[3];
+                        row_string[0] = i_rand.ToString();
+                        row_string[1] = j_rand.ToString();
+                        row_string[2] = elem.ToString();
+                        dt.Rows.Add(row_string); // добавляем строку в дата грид
+                        grid.Update();
+                    }
+                } while (mt.Search(i_rand, j_rand) == null);
+            }
+        }
+
+        private void inputRandomNumsForMatrix1_Click(object sender, EventArgs e)
+        {
+            random_fill(Matrix1ViewOnMainForm, A, matrix1, setNForMatrix1);
+        }
+
+        private void setNForMatrix1_KeyPress(object sender, KeyPressEventArgs e) // ограничение ввода размерности
+        {
+            char number = e.KeyChar;
+            if (!char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void setNForMatrix2_KeyPress(object sender, KeyPressEventArgs e) // ограничение ввода размерности
+        {
+            char number = e.KeyChar;
+            if (!char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
+            {
+                e.Handled = true;
+            }
+        }
+
+        void InitFormsForInputsMatrix()
+        {
+            matrix1 = new DataTable();
+            matrix1.Columns.Add("Строка");
+            matrix1.Columns.Add("Столбец");
+            matrix1.Columns.Add("Значение");
+            Matrix1ViewOnMainForm.DataSource = null;
+            Matrix1ViewOnMainForm.Rows.Clear();
+            Matrix1ViewOnMainForm.DataSource = matrix1;
+
+            matrix2 = new DataTable();
+            matrix2.Columns.Add("Строка");
+            matrix2.Columns.Add("Столбец");
+            matrix2.Columns.Add("Значение");
+            Matrix2ViewOnMainForm.DataSource = null;
+            Matrix2ViewOnMainForm.Rows.Clear();
+            Matrix2ViewOnMainForm.DataSource = matrix2;
+
+            matrix3 = new DataTable();
+            matrix3.Columns.Add("Строка");
+            matrix3.Columns.Add("Столбец");
+            matrix3.Columns.Add("Значение");
+            ResultMatrixViewOnMainForm.DataSource = null;
+            ResultMatrixViewOnMainForm.Rows.Clear();
+            ResultMatrixViewOnMainForm.DataSource = matrix2;
+        }
+
+        private void inputRandomNumsForMatrix2_Click(object sender, EventArgs e)
+        {
+            random_fill(Matrix2ViewOnMainForm, B, matrix2, setNForMatrix2);
+        }
+
+        //Клик на OK в первой матрице
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            double val;
+            int i, j;
+            try
+            {
+                val = Convert.ToDouble(inputValueForFirstMatrix1OnMainForm.Text);
+                i = Convert.ToInt32(inputRowForFirstMatrix1OnMainForm.Text);
+                j = Convert.ToInt32(inputColumnForFirstMatrix1OnMainForm.Text);
+
+                A.enter(i, j, val);
+
+                // добавляем строку в дата грид
+                matrix1.Rows.Add(i, j, val);
+                Matrix1ViewOnMainForm.Update();
+            }
+            catch
+            {
+                MessageBox.Show("Некорректный ввод!");
+            }
+
+        }
+
+        //Клик на ОК на второй матрице
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            double val;
+            int i, j;
+            try
+            {
+                val = Convert.ToDouble(inputValueForFirstMatrix2OnMainForm.Text);
+                i = Convert.ToInt32(inputRowForFirstMatrix2OnMainForm.Text);
+                j = Convert.ToInt32(inputColumnForFirstMatrix2OnMainForm.Text);
+
+                B.enter(i, j, val);
+
+                // добавляем строку в дата грид
+                matrix2.Rows.Add(i, j, val);
+                Matrix2ViewOnMainForm.Update();
+            }
+            catch
+            {
+                MessageBox.Show("Некорректный ввод!");
+            }
+        }
     }
+
 }

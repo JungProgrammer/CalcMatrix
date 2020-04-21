@@ -246,9 +246,11 @@
             this.setNForMatrix1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.setNForMatrix1.Location = new System.Drawing.Point(216, 86);
             this.setNForMatrix1.Margin = new System.Windows.Forms.Padding(4);
+            this.setNForMatrix1.MaxLength = 6;
             this.setNForMatrix1.Name = "setNForMatrix1";
             this.setNForMatrix1.Size = new System.Drawing.Size(117, 30);
             this.setNForMatrix1.TabIndex = 16;
+            this.setNForMatrix1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.setNForMatrix1_KeyPress);
             // 
             // label8
             // 
@@ -266,9 +268,11 @@
             this.setNForMatrix2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.setNForMatrix2.Location = new System.Drawing.Point(1111, 90);
             this.setNForMatrix2.Margin = new System.Windows.Forms.Padding(4);
+            this.setNForMatrix2.MaxLength = 6;
             this.setNForMatrix2.Name = "setNForMatrix2";
             this.setNForMatrix2.Size = new System.Drawing.Size(117, 30);
             this.setNForMatrix2.TabIndex = 19;
+            this.setNForMatrix2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.setNForMatrix2_KeyPress);
             // 
             // inputRandomNumsForMatrix1
             // 
@@ -280,6 +284,7 @@
             this.inputRandomNumsForMatrix1.TabIndex = 20;
             this.inputRandomNumsForMatrix1.Text = "Автоматический ввод";
             this.inputRandomNumsForMatrix1.UseVisualStyleBackColor = true;
+            this.inputRandomNumsForMatrix1.Click += new System.EventHandler(this.inputRandomNumsForMatrix1_Click);
             // 
             // inputFromFileForMatrix1
             // 
@@ -303,6 +308,7 @@
             this.inputRandomNumsForMatrix2.TabIndex = 22;
             this.inputRandomNumsForMatrix2.Text = "Автоматический ввод";
             this.inputRandomNumsForMatrix2.UseVisualStyleBackColor = true;
+            this.inputRandomNumsForMatrix2.Click += new System.EventHandler(this.inputRandomNumsForMatrix2_Click);
             // 
             // inputFromFileForMatrix2
             // 
