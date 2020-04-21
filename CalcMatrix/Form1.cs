@@ -12,6 +12,10 @@ namespace CalcMatrix
         Matrix A = new Matrix();
         Matrix B = new Matrix();
         Matrix C = new Matrix();
+
+        //таблицы для ручного ввода матриц
+        DataTable matrix1, matrix2;
+
         internal class List
         {
             public ulong L;//индексы
@@ -198,6 +202,7 @@ namespace CalcMatrix
         public mainForm()
         {
             InitializeComponent();
+            InitFormsForInputsMatrix();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -325,6 +330,75 @@ namespace CalcMatrix
                     foreach (DataGridViewRow row in ResultMatrixViewOnMainForm.Rows)
                         sw.Write(Convert.ToString(row.Cells[0].Value) + ' ' + Convert.ToString(row.Cells[1].Value) + ' ' + Convert.ToString(row.Cells[2].Value) + '\n');
                 }
+        }
+
+        /// <summary>
+        /// Инициализация таблиц матриц на главной форме
+        /// </summary>
+        void InitFormsForInputsMatrix()
+        {
+            matrix1 = new DataTable();
+            matrix1.Columns.Add("Строка");
+            matrix1.Columns.Add("Столбец");
+            matrix1.Columns.Add("Значение");
+            Matrix1ViewOnMainForm.DataSource = null;
+            Matrix1ViewOnMainForm.Rows.Clear();
+            Matrix1ViewOnMainForm.DataSource = matrix1;
+
+            matrix2 = new DataTable();
+            matrix2.Columns.Add("Строка");
+            matrix2.Columns.Add("Столбец");
+            matrix2.Columns.Add("Значение");
+            Matrix2ViewOnMainForm.DataSource = null;
+            Matrix2ViewOnMainForm.Rows.Clear();
+            Matrix2ViewOnMainForm.DataSource = matrix2;
+        }
+
+        //Клик на OK в первой матрице
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            double val;
+            int i, j;
+            try
+            {
+                val = Convert.ToDouble(inputValueForFirstMatrix1OnMainForm.Text);
+                i = Convert.ToInt32(inputRowForFirstMatrix1OnMainForm.Text);
+                j = Convert.ToInt32(inputColumnForFirstMatrix1OnMainForm.Text);
+
+                A.enter(i, j, val);
+
+                // добавляем строку в дата грид
+                matrix1.Rows.Add(i, j, val);
+                Matrix1ViewOnMainForm.Update();
+            }
+            catch
+            {
+                MessageBox.Show("Некорректный ввод!");
+            }
+
+        }
+
+        //Клик на ОК на второй матрице
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            double val;
+            int i, j;
+            try
+            {
+                val = Convert.ToDouble(inputValueForFirstMatrix2OnMainForm.Text);
+                i = Convert.ToInt32(inputRowForFirstMatrix2OnMainForm.Text);
+                j = Convert.ToInt32(inputColumnForFirstMatrix2OnMainForm.Text);
+
+                B.enter(i, j, val);
+
+                // добавляем строку в дата грид
+                matrix2.Rows.Add(i, j, val);
+                Matrix2ViewOnMainForm.Update();
+            }
+            catch
+            {
+                MessageBox.Show("Некорректный ввод!");
+            }
         }
     }
 }
