@@ -88,48 +88,36 @@ namespace CalcMatrix
 
         private void file_input(ref DataGridView grid, ref Matrix mt, ref DataTable dt,TextBox tb) // ввод из файла
         {
-            if (setNForMatrix1.Text != "")
-            {
-                if (mt.N >= 1 && mt.N <= 100000) // проверка правильности размерности 
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                try
                 {
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                        try
+                    using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
+                    {
+                        string line;
+                        grid.DataSource = null;
+                        grid.Rows.Clear();
+                        dt.Rows.Clear();
+                        grid.DataSource = matrix1;
+                        mt = new Matrix();
+                        mt.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
+                        while ((line = sw.ReadLine()) != null)
                         {
-                            using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
-                            {
-                                string line;
-                                grid.DataSource = null;
-                                grid.Rows.Clear();
-                                dt.Rows.Clear();
-                                grid.DataSource = matrix1;
-                                mt = new Matrix();
-                                mt.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
-                                while ((line = sw.ReadLine()) != null)
-                                {
-                                    string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
-                                    mt.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToDouble(row_string[2]));
-                                    matrix1.Rows.Add(row_string); // добавляем строку в дата грид
-                                    grid.Update();
-                                }
-                            }
+                            string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
+                            mt.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToDouble(row_string[2]));
+                            matrix1.Rows.Add(row_string); // добавляем строку в дата грид
+                            grid.Update();
                         }
-                        catch (SecurityException ex)
-                        {
-                            MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                            $"Details:\n\n{ex.StackTrace}");
-                        }
+                    }
                 }
-                else
-                    MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else
-                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch (SecurityException ex)
+                {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                }
         }
-
-
 
         private void random_fill(ref DataGridView grid, ref Matrix mt, ref DataTable dt, ref TextBox setNforMatrix)
         {
-
             int elem_numbers;//количество случайных чисел
             int i_rand, j_rand; // случайные индексы
             Random r = new Random();
@@ -213,10 +201,27 @@ namespace CalcMatrix
 
         private void inputRandomNumsForMatrix1_Click(object sender, EventArgs e)
         {
-            random_fill(ref Matrix1ViewOnMainForm, ref A, ref matrix1, ref setNForMatrix1);
+            if (setNForMatrix1.Text != "")
+                if (Convert.ToInt32((setNForMatrix1.Text)) >= 1 && Convert.ToInt32((setNForMatrix1.Text)) <= 100000) // проверка правильности размерности 
+                    random_fill(ref Matrix1ViewOnMainForm, ref A, ref matrix1, ref setNForMatrix1);
+                else
+                    MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void setNForMatrix1_KeyPress(object sender, KeyPressEventArgs e) // ограничение ввода размерности
+        private void inputRandomNumsForMatrix2_Click(object sender, EventArgs e)
+        {
+            if (setNForMatrix1.Text != "")
+                if (Convert.ToInt32((setNForMatrix1.Text)) >= 1 && Convert.ToInt32((setNForMatrix1.Text)) <= 100000) // проверка правильности размерности 
+                    random_fill(ref Matrix2ViewOnMainForm, ref B, ref matrix2, ref setNForMatrix2);
+                else
+                    MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+    private void setNForMatrix1_KeyPress(object sender, KeyPressEventArgs e) // ограничение ввода размерности
         {
             char number = e.KeyChar;
             if (!char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
@@ -228,11 +233,6 @@ namespace CalcMatrix
             char number = e.KeyChar;
             if (!char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
                 e.Handled = true;
-        }
-
-        private void inputRandomNumsForMatrix2_Click(object sender, EventArgs e)
-        {
-            random_fill(ref Matrix2ViewOnMainForm, ref B, ref matrix2, ref setNForMatrix2);
         }
 
         private void SumBut_Click(object sender, EventArgs e)
@@ -261,21 +261,40 @@ namespace CalcMatrix
 
         private void button5_Click(object sender, EventArgs e)
         {
-            matrix3.Rows.Clear();
-            C.N = A.N;
-            C = A.MultMatrux(A, B);
-            show_result();
+            if (A.N == B.N)
+            {
+                matrix3.Rows.Clear();
+                C.N = A.N;
+                C = A.MultMatrux(A, B);
+                show_result();
+            }
+            else
+                MessageBox.Show("Матрицы не могут быть разных размерностей", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             C = A.InverseMatrix();
-            matrix3.Rows.Clear();
-            show_result();
+            if (C != null)
+            {
+                matrix3.Rows.Clear();
+                show_result();
+            } else
+                MessageBox.Show("Обратной матрицы не существует", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            C = B.InverseMatrix();
+            if (C != null)
+            {
+                matrix3.Rows.Clear();
+                show_result();
+            }
+            else
+                MessageBox.Show("Обратной матрицы не существует", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
 
@@ -366,7 +385,6 @@ namespace CalcMatrix
                         if (i <= B.N && j <= B.N)
                         {
                             B.enter(i, j, val);
-
                             //переменная для поиска элемента в таблице
                             bool isFind = false;
                             //если у нас в таблице уже есть элементы
@@ -394,7 +412,6 @@ namespace CalcMatrix
                                     matrix2.Rows.Add(i, j, val);
                                     Matrix2ViewOnMainForm.Update();
                                 }
-
                             }
                             //если таблица пустая
                             else
@@ -405,13 +422,11 @@ namespace CalcMatrix
                             }
                         } else
                             MessageBox.Show("Индекс больше размерности матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                     }
                     catch
                     {
                         MessageBox.Show("Некорректный ввод!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
                 }
                 else
                     MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);

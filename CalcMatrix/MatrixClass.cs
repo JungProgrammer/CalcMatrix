@@ -85,7 +85,7 @@ internal class Matrix
     /// <returns></returns>
     public List Search(int i, int j)
     {
-        ulong L = Convert.ToUInt64(i + j * N);
+        ulong L = (ulong)(i + j * N);
         List temp = this.elem;
         while ((temp != null) && (L != temp.L)) temp = temp.next;
         return temp;
@@ -101,7 +101,8 @@ internal class Matrix
     public void Delete(int i, int j)
     {
         //конвертируем индексы
-        ulong L = Convert.ToUInt64(i + j * N);
+        ulong L = (ulong)(i + j * N);
+
 
         List temp1 = elem, temp2 = null;
         while ((temp1 != null) && (L != temp1.L))
@@ -134,7 +135,8 @@ internal class Matrix
         }
 
         //конвертируем индексы
-        ulong L = Convert.ToUInt64(i + j * N);
+        ulong L = (ulong)(i + j * N);
+
 
         List temp1 = elem, temp2 = null;
         while ((temp1 != null) && (L > temp1.L))
@@ -179,7 +181,8 @@ internal class Matrix
     public List create_list(int i, int j, double a)
     {
         if (a == 0) return null;
-        ulong L = Convert.ToUInt64(i + j * N);//конвертируем индексы
+        ulong L = (ulong)(i + j * N);
+
         elem = new List();
         elem.next = null;
         elem.value = a;
@@ -206,7 +209,6 @@ internal class Matrix
         List temp1, temp2;
         for (int j = 0; j < N; j++)//проходимся по всей строчке
         {
-
             temp1 = Search(ded, j);//находим
             if (temp1 != null)//если нашли первую,то ищем вторую
             {
@@ -256,7 +258,6 @@ internal class Matrix
             }
 
             for (i = 0; i < N; i++) //ищем остальные элементы в столбце
-            {
                 if (i != j)//ОСТАЛЬНЫЕ!
                 {
                     temp2 = Search(i, j);
@@ -266,9 +267,7 @@ internal class Matrix
                         Summ(j, i, -vari);
                         invMatrix.Summ(j, i, -vari);
                     }
-
                 }
-            }
         }
         return invMatrix;
     }
@@ -334,8 +333,6 @@ internal class Matrix
     public Matrix MultMatrux(Matrix m1, Matrix m2)
     {
         Matrix resMatrix = null;
-        if (m1.N == m2.N)
-        {
             resMatrix = new Matrix();
             resMatrix.N = m1.N;
             resMatrix.elem = new List();
@@ -355,17 +352,16 @@ internal class Matrix
                             List m1Elem = m1.Search(i, k);
                             List m2Elem = m2.Search(k, j);
                             if (m1Elem != null && m2Elem != null)
+                            {
                                 res += m1Elem.value * m2Elem.value;
+                                res = Math.Round(res, 2);
+                            }
                         }
 
                         //добавление результата
                         if (res != 0)
                             resMatrix.Insert(i, j, res);
                     }
-        }
-        else
-            MessageBox.Show("Матрицы не могут быть разных размерностей", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
         return resMatrix;
     }
 }
