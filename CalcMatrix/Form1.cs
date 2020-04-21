@@ -227,13 +227,18 @@ namespace CalcMatrix
 
         private void SumBut_Click(object sender, EventArgs e)
         {
-            //C = A.sumlist(B);
-            //show_result();
+            matrix3.Rows.Clear();
+            C.N = A.N;
+            C = A.Matr_summ_kir(ref A, ref B);
+            show_result();
         }
 
         private void Dev_Click(object sender, EventArgs e)
         {
-
+            matrix3.Rows.Clear();
+            C.N = A.N;
+            C = A.Matr_minus_kir(ref A, ref B);
+            show_result();
         }
 
         private void button5_Click(object sender, EventArgs e)

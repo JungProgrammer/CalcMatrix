@@ -270,7 +270,65 @@ internal class Matrix
                 }
             }
         }
-
         return invMatrix;
+    }
+    public Matrix Matr_summ_kir(ref Matrix A,ref Matrix B)
+    {
+        List temp;
+        Matrix C = new Matrix();
+        C.N = A.N;
+        temp = A.elem;
+        while ((temp != null))
+        {
+            int temp_i = A.GetRow(temp);
+            int temp_j = A.GetColumn(temp);
+            if(C.Search(temp_i,temp_j) == null)
+                C.enter(temp_i, temp_j, temp.value);
+            else
+                C.enter(temp_i, temp_j, temp.value + B.Search(temp_i, temp_j).value);
+            temp = temp.next;
+        }
+        temp = B.elem;
+        while ((temp != null))
+        {
+            int temp_i = B.GetRow(temp);
+            int temp_j = B.GetColumn(temp);
+            if (C.Search(temp_i, temp_j) == null)
+                C.enter(temp_i, temp_j, temp.value);
+            else
+                C.enter(temp_i, temp_j, temp.value + A.Search(temp_i, temp_j).value);
+            temp = temp.next;
+        }
+        return C;
+    }
+
+    public Matrix Matr_minus_kir(ref Matrix A, ref Matrix B)
+    {
+        List temp;
+        Matrix C = new Matrix();
+        C.N = A.N;
+        temp = A.elem;
+        while ((temp != null))
+        {
+            int temp_i = A.GetRow(temp);
+            int temp_j = A.GetColumn(temp);
+            if (B.Search(temp_i, temp_j) == null)
+                C.enter(temp_i, temp_j, temp.value);
+            else
+                C.enter(temp_i, temp_j, temp.value - B.Search(temp_i, temp_j).value);
+            temp = temp.next;
+        }
+        temp = B.elem;
+        while ((temp != null))
+        {
+            int temp_i = B.GetRow(temp);
+            int temp_j = B.GetColumn(temp);
+            if (A.Search(temp_i, temp_j) == null)
+                C.enter(temp_i, temp_j, -temp.value);
+            else
+                C.enter(temp_i, temp_j, temp.value + A.Search(temp_i, temp_j).value);
+            temp = temp.next;
+        }
+        return C;
     }
 }
