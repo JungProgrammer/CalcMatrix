@@ -5,11 +5,11 @@ namespace CalcMatrix
 {
     public partial class FullViewForm : Form
     {
-        mainForm.Matrix current_opened_matrix; //текущая открытая матрица
+        Matrix current_opened_matrix; //текущая открытая матрица
         int current_row = 0; // начало текущего диапазона индексов строк
         int current_column = 0; // начало текущего диапазона индексов столбцов
         const int TABLE_DIM = 50; //Разрмерность матрицы data grid 
-        internal FullViewForm(mainForm.Matrix matr)
+        internal FullViewForm(Matrix matr)
         {
             InitializeComponent();
             current_opened_matrix = matr;
@@ -69,7 +69,7 @@ namespace CalcMatrix
             for (int j = 0; j < TABLE_DIM ; j++)
             {
                 row[j] = "0";
-                dataGridView1.Columns.Add(Convert.ToString(current_column + j), Convert.ToString(current_column + j + 1));
+                dataGridView1.Columns.Add(Convert.ToString(current_column + j), Convert.ToString(current_column + j));
             }
 
             for (int i = 0; i < TABLE_DIM; i++) 
