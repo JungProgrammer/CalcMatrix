@@ -91,18 +91,19 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(420, 158);
+            this.button1.Location = new System.Drawing.Point(420, 159);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(67, 32);
             this.button1.TabIndex = 2;
             this.button1.Text = "Ок";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // inputValueForFirstMatrix1OnMainForm
             // 
             this.inputValueForFirstMatrix1OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputValueForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(40, 158);
+            this.inputValueForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(295, 159);
             this.inputValueForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputValueForFirstMatrix1OnMainForm.Name = "inputValueForFirstMatrix1OnMainForm";
             this.inputValueForFirstMatrix1OnMainForm.Size = new System.Drawing.Size(117, 30);
@@ -111,7 +112,7 @@
             // inputRowForFirstMatrix1OnMainForm
             // 
             this.inputRowForFirstMatrix1OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputRowForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(167, 158);
+            this.inputRowForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(40, 159);
             this.inputRowForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputRowForFirstMatrix1OnMainForm.Name = "inputRowForFirstMatrix1OnMainForm";
             this.inputRowForFirstMatrix1OnMainForm.Size = new System.Drawing.Size(117, 30);
@@ -120,7 +121,7 @@
             // inputColumnForFirstMatrix1OnMainForm
             // 
             this.inputColumnForFirstMatrix1OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputColumnForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(293, 158);
+            this.inputColumnForFirstMatrix1OnMainForm.Location = new System.Drawing.Point(168, 159);
             this.inputColumnForFirstMatrix1OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputColumnForFirstMatrix1OnMainForm.Name = "inputColumnForFirstMatrix1OnMainForm";
             this.inputColumnForFirstMatrix1OnMainForm.Size = new System.Drawing.Size(117, 30);
@@ -130,7 +131,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(36, 124);
+            this.label1.Location = new System.Drawing.Point(290, 126);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(128, 29);
@@ -141,7 +142,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(165, 124);
+            this.label2.Location = new System.Drawing.Point(36, 126);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(95, 29);
@@ -152,7 +153,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(288, 124);
+            this.label3.Location = new System.Drawing.Point(160, 126);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(114, 29);
@@ -163,7 +164,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(1196, 124);
+            this.label4.Location = new System.Drawing.Point(1074, 126);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(114, 29);
@@ -174,7 +175,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(1073, 124);
+            this.label5.Location = new System.Drawing.Point(947, 126);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 29);
@@ -185,7 +186,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(944, 124);
+            this.label6.Location = new System.Drawing.Point(1200, 126);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(128, 29);
@@ -195,7 +196,7 @@
             // inputColumnForFirstMatrix2OnMainForm
             // 
             this.inputColumnForFirstMatrix2OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputColumnForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(1201, 158);
+            this.inputColumnForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(1077, 159);
             this.inputColumnForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputColumnForFirstMatrix2OnMainForm.Name = "inputColumnForFirstMatrix2OnMainForm";
             this.inputColumnForFirstMatrix2OnMainForm.Size = new System.Drawing.Size(117, 30);
@@ -204,7 +205,7 @@
             // inputRowForFirstMatrix2OnMainForm
             // 
             this.inputRowForFirstMatrix2OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputRowForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(1075, 158);
+            this.inputRowForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(949, 159);
             this.inputRowForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputRowForFirstMatrix2OnMainForm.Name = "inputRowForFirstMatrix2OnMainForm";
             this.inputRowForFirstMatrix2OnMainForm.Size = new System.Drawing.Size(117, 30);
@@ -213,7 +214,7 @@
             // inputValueForFirstMatrix2OnMainForm
             // 
             this.inputValueForFirstMatrix2OnMainForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.inputValueForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(948, 158);
+            this.inputValueForFirstMatrix2OnMainForm.Location = new System.Drawing.Point(1204, 159);
             this.inputValueForFirstMatrix2OnMainForm.Margin = new System.Windows.Forms.Padding(4);
             this.inputValueForFirstMatrix2OnMainForm.Name = "inputValueForFirstMatrix2OnMainForm";
             this.inputValueForFirstMatrix2OnMainForm.Size = new System.Drawing.Size(117, 30);
@@ -222,13 +223,14 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(1328, 158);
+            this.button2.Location = new System.Drawing.Point(1328, 159);
             this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(65, 32);
             this.button2.TabIndex = 9;
             this.button2.Text = "Ок";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // label7
             // 
