@@ -358,6 +358,7 @@
             this.SumBut.TabIndex = 27;
             this.SumBut.Text = "Сумма";
             this.SumBut.UseVisualStyleBackColor = true;
+            this.SumBut.Click += new System.EventHandler(this.SumBut_Click);
             // 
             // Dev
             // 
@@ -369,6 +370,7 @@
             this.Dev.TabIndex = 28;
             this.Dev.Text = "Разность";
             this.Dev.UseVisualStyleBackColor = true;
+            this.Dev.Click += new System.EventHandler(this.Dev_Click);
             // 
             // button5
             // 
@@ -380,6 +382,7 @@
             this.button5.TabIndex = 29;
             this.button5.Text = "Умножение";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -391,6 +394,7 @@
             this.button6.TabIndex = 30;
             this.button6.Text = "Обратная матрица для первой матрицы";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -402,6 +406,7 @@
             this.button7.TabIndex = 31;
             this.button7.Text = "Обратная матрица для второй матрицы";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // buttonFullViewMatrix3
             // 

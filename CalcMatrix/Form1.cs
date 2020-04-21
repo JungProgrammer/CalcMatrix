@@ -12,7 +12,7 @@ namespace CalcMatrix
         Matrix A;
         Matrix B;
         Matrix C;
-        DataTable matrix1, matrix2,matrix3;
+        DataTable matrix1, matrix2, matrix3;
 
         public mainForm()
         {
@@ -53,6 +53,24 @@ namespace CalcMatrix
             ResultMatrixViewOnMainForm.DataSource = null;
             ResultMatrixViewOnMainForm.Rows.Clear();
             ResultMatrixViewOnMainForm.DataSource = matrix3;
+        }
+
+        void show_result() // отображение результата операции
+        {
+            ResultMatrixViewOnMainForm.DataSource = null;
+            ResultMatrixViewOnMainForm.Rows.Clear();
+            ResultMatrixViewOnMainForm.DataSource = matrix3;
+            List temp = C.elem;
+            while ((temp != null))
+            {
+                string[] row_string = new string[3];
+                row_string[0] = C.GetRow(temp).ToString();
+                row_string[1] = C.GetColumn(temp).ToString();
+                row_string[2] = temp.value.ToString();
+                matrix3.Rows.Add(row_string); // добавляем строку в дата грид
+                ResultMatrixViewOnMainForm.Update();
+                temp = temp.next;
+            }
         }
 
         private void file_save(DataGridView grid, Matrix mt) // сохранение в файл
@@ -97,23 +115,7 @@ namespace CalcMatrix
                 }
         }
 
-        private void show_result() // отображение результата операции
-        {
-            ResultMatrixViewOnMainForm.DataSource = null;
-            ResultMatrixViewOnMainForm.Rows.Clear();
-            ResultMatrixViewOnMainForm.DataSource = matrix3;
-            List temp = C.elem;
-            while ((temp != null))
-            {
-                string[] row_string = new string[3];
-                row_string[0] = C.GetRow(temp).ToString();
-                row_string[1] = C.GetColumn(temp).ToString();
-                row_string[2] = temp.value.ToString();
-                matrix3.Rows.Add(row_string); // добавляем строку в дата грид
-                ResultMatrixViewOnMainForm.Update();
-                temp = temp.next;
-            }
-        }
+
 
         private void random_fill(ref DataGridView grid, ref Matrix mt, ref DataTable dt, ref TextBox setNforMatrix)
         {
@@ -151,7 +153,8 @@ namespace CalcMatrix
                         }
                     } while (mt.Search(i_rand, j_rand) == null); // генерируем рандомные индексы пока натыкаемся на существующие элементы
                 }
-            } else
+            }
+            else
                 MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -219,50 +222,176 @@ namespace CalcMatrix
 
         private void inputRandomNumsForMatrix2_Click(object sender, EventArgs e)
         {
-            random_fill(ref Matrix2ViewOnMainForm, ref B,ref  matrix2, ref setNForMatrix2);
+            random_fill(ref Matrix2ViewOnMainForm, ref B, ref matrix2, ref setNForMatrix2);
+        }
+
+        private void SumBut_Click(object sender, EventArgs e)
+        {
+            //C = A.sumlist(B);
+            //show_result();
+        }
+
+        private void Dev_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            C.N = A.N;
+            C = C.InverseMatrix();
+            matrix3.Rows.Clear();
+            show_result();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            double val;
-            int i, j;
-            try
+            if (setNForMatrix1.Text != "")
             {
-                val = Convert.ToDouble(inputValueForFirstMatrix1OnMainForm.Text);
-                i = Convert.ToInt32(inputRowForFirstMatrix1OnMainForm.Text);
-                j = Convert.ToInt32(inputColumnForFirstMatrix1OnMainForm.Text);
+                A.N = Convert.ToInt32(setNForMatrix1.Text);
+                if (A.N >= 1 && A.N <= 100000) // проверка правильности размерности 
+                {
+                    double val;
+                    int i, j;
+                    try
+                    {
+                        val = Convert.ToDouble(inputValueForFirstMatrix1OnMainForm.Text);
+                        i = Convert.ToInt32(inputRowForFirstMatrix1OnMainForm.Text);
+                        j = Convert.ToInt32(inputColumnForFirstMatrix1OnMainForm.Text);
+                        if (i <= A.N && j <= A.N)
+                        {
 
-                A.enter(i, j, val);
-                // добавляем строку в дата грид
-                matrix1.Rows.Add(i, j, val);
-                Matrix1ViewOnMainForm.Update();
+                            A.enter(i, j, val);
+
+                            //переменная для поиска элемента в таблице
+                            bool isFind = false;
+                            //если у нас в таблице уже есть элементы
+                            if (matrix1.Rows.Count > 0)
+                            {
+                                //проходим по строкам таблицы
+                                for (int k = 0; k < matrix1.Rows.Count; k++)
+                                {
+                                    //если у нас совпали координаты с координатами в строке таблицы
+                                    if (i == Convert.ToInt32(matrix1.Rows[k]["Строка"]) && j == Convert.ToInt32(matrix1.Rows[k]["Столбец"]))
+                                    {
+                                        //обновляем элемент в таблице
+                                        isFind = true;
+                                        matrix1.Rows[k].BeginEdit();
+                                        matrix1.Rows[k]["Значение"] = val;
+                                        matrix1.Rows[k]["Строка"] = i;
+                                        matrix1.Rows[k]["Столбец"] = j;
+                                        matrix1.Rows[k].EndEdit();
+                                    }
+                                }
+                                //если такого элемента не было в таблице, то добавляем новый
+                                if (!isFind)
+                                {
+                                    // добавляем строку в дата грид
+                                    matrix1.Rows.Add(i, j, val);
+                                    Matrix1ViewOnMainForm.Update();
+                                }
+                            }
+                            //если таблица пустая
+                            else
+                            {
+                                // добавляем строку в дата грид
+                                matrix1.Rows.Add(i, j, val);
+                                Matrix1ViewOnMainForm.Update();
+                            }
+                        } else
+                            MessageBox.Show("Индекс больше размерности матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Некорректный ввод!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                    MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch
-            {
-               MessageBox.Show("Некорректный ввод!");
-            }
+            else
+                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            double val;
-            int i, j;
-            try
+            if (setNForMatrix2.Text != "")
             {
-                val = Convert.ToDouble(inputValueForFirstMatrix2OnMainForm.Text);
-                i = Convert.ToInt32(inputRowForFirstMatrix2OnMainForm.Text);
-                j = Convert.ToInt32(inputColumnForFirstMatrix2OnMainForm.Text);
+                B.N = Convert.ToInt32(setNForMatrix2.Text);
+                if (B.N >= 1 && B.N <= 100000) // проверка правильности размерности 
+                {
+                    double val;
+                    int i, j;
+                    try
+                    {
+                        val = Convert.ToDouble(inputValueForFirstMatrix2OnMainForm.Text);
+                        i = Convert.ToInt32(inputRowForFirstMatrix2OnMainForm.Text);
+                        j = Convert.ToInt32(inputColumnForFirstMatrix2OnMainForm.Text);
+                        if (i <= B.N && j <= B.N)
+                        {
+                            B.enter(i, j, val);
 
-                B.enter(i, j, val);
+                            //переменная для поиска элемента в таблице
+                            bool isFind = false;
+                            //если у нас в таблице уже есть элементы
+                            if (matrix2.Rows.Count > 0)
+                            {
+                                //проходим по строкам таблицы
+                                for (int k = 0; k < matrix2.Rows.Count; k++)
+                                {
+                                    //если у нас совпали координаты с координатами в строке таблицы
+                                    if (i == Convert.ToInt32(matrix2.Rows[k]["Строка"]) && j == Convert.ToInt32(matrix2.Rows[k]["Столбец"]))
+                                    {
+                                        //обновляем элемент в таблице
+                                        isFind = true;
+                                        matrix2.Rows[k].BeginEdit();
+                                        matrix2.Rows[k]["Значение"] = val;
+                                        matrix2.Rows[k]["Строка"] = i;
+                                        matrix2.Rows[k]["Столбец"] = j;
+                                        matrix2.Rows[k].EndEdit();
+                                    }
+                                }
+                                //если такого элемента не было в таблице, то добавляем новый
+                                if (!isFind)
+                                {
+                                    // добавляем строку в дата грид
+                                    matrix2.Rows.Add(i, j, val);
+                                    Matrix2ViewOnMainForm.Update();
+                                }
 
-                // добавляем строку в дата грид
-                matrix2.Rows.Add(i, j, val);
-                Matrix2ViewOnMainForm.Update();
-            }
-            catch
-            {
-                MessageBox.Show("Некорректный ввод!");
-            }
+                            }
+                            //если таблица пустая
+                            else
+                            {
+                                // добавляем строку в дата грид
+                                matrix2.Rows.Add(i, j, val);
+                                Matrix2ViewOnMainForm.Update();
+                            }
+                        } else
+                            MessageBox.Show("Индекс больше размерности матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Некорректный ввод!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
+                else
+                    MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else
+                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using System;
-        internal class List
-        {
+internal class List
+{
     public ulong L;//индексы
     public double value;//значение
     public List next = null;
-        }
+}
 internal class Matrix
 {
     public int N;
     public List elem;
-
     /// <summary>
     /// Получает номер столбца элемента
     /// </summary>
@@ -76,8 +75,6 @@ internal class Matrix
 
     /// <summary>
     /// Производит поиск элемента по заданным индексам
-    /// null - если элемент не найдем
-    /// если найдем то List этот элемент
     /// </summary>
     /// <param name="arr"></param>
     /// <param name="i"></param>
@@ -166,13 +163,17 @@ internal class Matrix
         }
     }
 
-    /// <summary>
-    /// создание списка
-    /// </summary>
-    /// <param name="i"></param>
-    /// <param name="j"></param>
-    /// <param name="a"></param>
-    /// <returns></returns>
+    void Division(int i, double mult)//умножение строчки на число
+    {
+        List temp1;
+        for (int j = 0; j < N; j++)
+        {
+            temp1 = Search(i, j);
+            if (temp1 != null) temp1.value = temp1.value * mult;
+        }
+    }
+
+
     public List create_list(int i, int j, double a)
     {
         if (a == 0) return null;
@@ -184,15 +185,92 @@ internal class Matrix
         return elem;
     }
 
-    /// <summary>
-    /// вставка элемента в список
-    /// </summary>
-    /// <param name="i"></param>
-    /// <param name="j"></param>
-    /// <param name="a"></param>
     public void enter(int i, int j, double a)
     {
         if (elem != null) Insert(i, j, a);
         else elem = create_list(i, j, a);
+    }
+
+    /// <summary>
+    /// Прибавляет к матрице вектор
+    /// </summary>
+    /// <param name="ded"></param>
+    /// <param name="sub"></param>
+    /// <param name="mult"></param>
+    /// <param name="a"></param>
+    /// <param name="N"></param>
+    void Summ(int ded, int sub, double mult)//ded-слагаемое sub-то,с чем складывают
+    {
+        List temp1, temp2;
+        for (int j = 0; j < N; j++)//проходимся по всей строчке
+        {
+
+            temp1 = Search(ded, j);//находим
+            if (temp1 != null)//если нашли первую,то ищем вторую
+            {
+                temp2 = Search(sub, j);
+                if (temp2 != null) { temp2.value = temp2.value + mult * temp1.value; if (temp2.value == 0) Delete(sub, j); }//Нашли?Складываем //если получился ноль,удаляем
+                else
+                {
+                    Insert(sub, j, mult * temp1.value); //Нет?Создаем новый элемент
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Нахождение обратной матрицы
+    /// </summary>
+    /// <param name="arr"></param>
+    /// <param name="N"></param>
+    /// <returns></returns>
+    public Matrix InverseMatrix()//обратная матрица методом Гаусса-Жордана
+    {
+        double vari;
+        Matrix invMatrix = new Matrix();
+        invMatrix.N = N;
+        invMatrix.elem = create_list(0, 0, 1); //создаем еденичную матрицу
+        List temp, temp2;
+        for (int i = 1; i < N; i++)
+        {
+            invMatrix.Insert(i, i, 1);
+
+        }
+
+        for (int j = 0; j < N; j++)             //обрабатываем каждый столбец
+        {
+            int i = j;
+            temp = Search(i, j);        //ищем диагональный элемент
+            while ((i < N) && (temp == null)) { i++; temp = Search(i, j); }//или ниже
+            if (i == N) return null;//если не нашли,то у нее нет обратной матрицы
+            if (i != j)//если нашли ниже диагональной-переносим на диагональную
+            {
+                Summ(i, j, 1);
+                invMatrix.Summ(i, j, 1);
+            }
+            if (temp.value != 1)
+            {//приводим к 1 диагональный элемент
+                vari = temp.value;
+                Division(j, 1.0 / vari);
+                invMatrix.Division(j, 1.0 / vari);
+            }
+
+            for (i = 0; i < N; i++) //ищем остальные элементы в столбце
+            {
+                if (i != j)//ОСТАЛЬНЫЕ!
+                {
+                    temp2 = Search(i, j);
+                    if (temp2 != null) //Нашли?Нулим!
+                    {
+                        vari = temp2.value;
+                        Summ(j, i, -vari);
+                        invMatrix.Summ(j, i, -vari);
+                    }
+
+                }
+            }
+        }
+
+        return invMatrix;
     }
 }
