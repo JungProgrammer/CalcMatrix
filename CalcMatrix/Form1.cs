@@ -86,33 +86,43 @@ namespace CalcMatrix
                 }
         }
 
-        private void file_input(ref DataGridView grid, ref Matrix mt) // ввод из файла
+        private void file_input(ref DataGridView grid, ref Matrix mt, ref DataTable dt,TextBox tb) // ввод из файла
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                try
+            if (setNForMatrix1.Text != "")
+            {
+                if (mt.N >= 1 && mt.N <= 100000) // проверка правильности размерности 
                 {
-                    using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
-                    {
-                        string line;
-                        grid.DataSource = null;
-                        grid.Rows.Clear();
-                        grid.DataSource = matrix1;
-                        mt = new Matrix();
-                        mt.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
-                        while ((line = sw.ReadLine()) != null)
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                        try
                         {
-                            string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
-                            mt.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToDouble(row_string[2]));
-                            matrix1.Rows.Add(row_string); // добавляем строку в дата грид
-                            grid.Update();
+                            using (StreamReader sw = new StreamReader(openFileDialog1.FileName))
+                            {
+                                string line;
+                                grid.DataSource = null;
+                                grid.Rows.Clear();
+                                dt.Rows.Clear();
+                                grid.DataSource = matrix1;
+                                mt = new Matrix();
+                                mt.N = Convert.ToInt32(sw.ReadLine()); // определение размерности
+                                while ((line = sw.ReadLine()) != null)
+                                {
+                                    string[] row_string = line.Split(new char[] { ' ' });//делим строку на массив чисел
+                                    mt.enter(Convert.ToInt32(row_string[0]), Convert.ToInt32(row_string[1]), Convert.ToDouble(row_string[2]));
+                                    matrix1.Rows.Add(row_string); // добавляем строку в дата грид
+                                    grid.Update();
+                                }
+                            }
                         }
-                    }
+                        catch (SecurityException ex)
+                        {
+                            MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                            $"Details:\n\n{ex.StackTrace}");
+                        }
                 }
-                catch (SecurityException ex)
-                {
-                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                    $"Details:\n\n{ex.StackTrace}");
-                }
+                else
+                    MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else
+                MessageBox.Show("Некорректная размерность матрицы", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
 
@@ -160,7 +170,7 @@ namespace CalcMatrix
 
         private void InputFromFileForMatrix1_Click(object sender, EventArgs e) // ввод матрицы А из файла
         {
-            file_input(ref Matrix1ViewOnMainForm, ref A);
+            file_input(ref Matrix1ViewOnMainForm, ref A,ref matrix1, setNForMatrix1);
         }
 
         private void buttonFullViewMatrix1_Click(object sender, EventArgs e)
@@ -183,7 +193,7 @@ namespace CalcMatrix
 
         private void inputFromFileForMatrix2_Click(object sender, EventArgs e) // ввод матрицы B из файла
         {
-            file_input(ref Matrix2ViewOnMainForm, ref B);
+            file_input(ref Matrix2ViewOnMainForm, ref B, ref matrix2, setNForMatrix2);
         }
 
         private void SaveMatrix1ToFile_Click(object sender, EventArgs e) //сохранение матрицы А в файл
@@ -227,29 +237,39 @@ namespace CalcMatrix
 
         private void SumBut_Click(object sender, EventArgs e)
         {
-            matrix3.Rows.Clear();
-            C.N = A.N;
-            C = A.Matr_summ_kir(ref A, ref B);
-            show_result();
+            if (A.N == B.N)
+            {
+                matrix3.Rows.Clear();
+                C.N = A.N;
+                C = A.matr_summ(ref A, ref B);
+                show_result();
+            } else
+                MessageBox.Show("Матрицы не могут быть разных размерностей", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void Dev_Click(object sender, EventArgs e)
         {
-            matrix3.Rows.Clear();
-            C.N = A.N;
-            C = A.Matr_minus_kir(ref A, ref B);
-            show_result();
+            if (A.N == B.N)
+            {
+                matrix3.Rows.Clear();
+                C.N = A.N;
+                C = A.matr_minus(ref A, ref B);
+                show_result();
+            } else
+                MessageBox.Show("Матрицы не могут быть разных размерностей", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            matrix3.Rows.Clear();
+            C.N = A.N;
+            C = A.MultMatrux(A, B);
+            show_result();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            C.N = A.N;
-            C = C.InverseMatrix();
+            C = A.InverseMatrix();
             matrix3.Rows.Clear();
             show_result();
         }

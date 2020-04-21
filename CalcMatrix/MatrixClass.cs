@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows.Forms;
+
 internal class List
 {
     public ulong L;//индексы
@@ -211,9 +213,7 @@ internal class Matrix
                 temp2 = Search(sub, j);
                 if (temp2 != null) { temp2.value = temp2.value + mult * temp1.value; if (temp2.value == 0) Delete(sub, j); }//Нашли?Складываем //если получился ноль,удаляем
                 else
-                {
                     Insert(sub, j, mult * temp1.value); //Нет?Создаем новый элемент
-                }
             }
         }
     }
@@ -229,7 +229,7 @@ internal class Matrix
         double vari;
         Matrix invMatrix = new Matrix();
         invMatrix.N = N;
-        invMatrix.elem = create_list(0, 0, 1); //создаем еденичную матрицу
+        invMatrix.create_list(0, 0, 1); //создаем еденичную матрицу
         List temp, temp2;
         for (int i = 1; i < N; i++)
         {
@@ -272,37 +272,37 @@ internal class Matrix
         }
         return invMatrix;
     }
-    public Matrix Matr_summ_kir(ref Matrix A,ref Matrix B)
+    public Matrix matr_summ(ref Matrix A,ref Matrix B)
     {
-        List temp;
-        Matrix C = new Matrix();
-        C.N = A.N;
-        temp = A.elem;
-        while ((temp != null))
-        {
-            int temp_i = A.GetRow(temp);
-            int temp_j = A.GetColumn(temp);
-            if(C.Search(temp_i,temp_j) == null)
-                C.enter(temp_i, temp_j, temp.value);
-            else
-                C.enter(temp_i, temp_j, temp.value + B.Search(temp_i, temp_j).value);
-            temp = temp.next;
-        }
-        temp = B.elem;
-        while ((temp != null))
-        {
-            int temp_i = B.GetRow(temp);
-            int temp_j = B.GetColumn(temp);
-            if (C.Search(temp_i, temp_j) == null)
-                C.enter(temp_i, temp_j, temp.value);
-            else
-                C.enter(temp_i, temp_j, temp.value + A.Search(temp_i, temp_j).value);
-            temp = temp.next;
-        }
-        return C;
+            List temp;
+            Matrix C = new Matrix();
+            C.N = A.N;
+            temp = A.elem;
+            while ((temp != null))
+            {
+                int temp_i = A.GetRow(temp);
+                int temp_j = A.GetColumn(temp);
+                if (C.Search(temp_i, temp_j) == null)
+                    C.enter(temp_i, temp_j, temp.value);
+                else
+                    C.enter(temp_i, temp_j, temp.value + B.Search(temp_i, temp_j).value);
+                temp = temp.next;
+            }
+            temp = B.elem;
+            while ((temp != null))
+            {
+                int temp_i = B.GetRow(temp);
+                int temp_j = B.GetColumn(temp);
+                if (C.Search(temp_i, temp_j) == null)
+                    C.enter(temp_i, temp_j, temp.value);
+                else
+                    C.enter(temp_i, temp_j, temp.value + A.Search(temp_i, temp_j).value);
+                temp = temp.next;
+            }
+            return C;
     }
 
-    public Matrix Matr_minus_kir(ref Matrix A, ref Matrix B)
+    public Matrix matr_minus(ref Matrix A, ref Matrix B)
     {
         List temp;
         Matrix C = new Matrix();
@@ -330,5 +330,42 @@ internal class Matrix
             temp = temp.next;
         }
         return C;
+    }
+    public Matrix MultMatrux(Matrix m1, Matrix m2)
+    {
+        Matrix resMatrix = null;
+        if (m1.N == m2.N)
+        {
+            resMatrix = new Matrix();
+            resMatrix.N = m1.N;
+            resMatrix.elem = new List();
+
+            //переменная, куда будет считаться результат для двух векторов
+            double res;
+            int i, j, k;
+            for (i = 0; i < m1.N; i++)
+                for (j = 0; j < m1.N; j++)
+                    //если в обоих векторах есть ненулевые значения
+                    if (m1.RowIsNotZero(i) && m2.ColumnIsNotZero(j))
+                    {
+                        res = 0;
+                        //перемножение векторов
+                        for (k = 0; k < m1.N; k++)
+                        {
+                            List m1Elem = m1.Search(i, k);
+                            List m2Elem = m2.Search(k, j);
+                            if (m1Elem != null && m2Elem != null)
+                                res += m1Elem.value * m2Elem.value;
+                        }
+
+                        //добавление результата
+                        if (res != 0)
+                            resMatrix.Insert(i, j, res);
+                    }
+        }
+        else
+            MessageBox.Show("Матрицы не могут быть разных размерностей", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        return resMatrix;
     }
 }
